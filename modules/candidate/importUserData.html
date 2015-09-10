@@ -1,0 +1,28 @@
+﻿<div class="row" ng-controller="candidateController" ng-init="PopulateData()">
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="form-group">
+            <label>
+                Upload the file (.csv)</label>
+            <div class="the-box no-border full card-info">
+                <!-- /.the-box .no-border .bg-info .no-margin -->
+                <form id="Form2" name="fileupload" enctype="multipart/form-data" method="post" class="the-box">
+                <input type="file" name="file" onchange="angular.element(this).scope().ImportUserData(this.files)"
+                    class="btn btn-primary btn-block btn-lg btn-square" style="width: 26% !important" />
+                </form>
+            </div>
+        </div>
+        <div class="the-box no-border no-margin" ng-show="isShowSummaryPanel">
+            <h3>
+                Summary</h3>
+            <div>
+                <span ng-repeat="log in logs">{{log.message}}<hr style="margin: 0px" />
+                </span><span ng-show="logs.length==0">User data has been imported</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+    </div>
+</div>
+ 

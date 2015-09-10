@@ -22,7 +22,8 @@
                                                         'ngMap',
                                                         'um_ExportTimesheetController',
                                                         'ngMaterial',
-                                                        'ngAnimate'
+                                                        'ngAnimate',
+                                                        'um_UtilService' 
                                                     ]);
     esProntoApp.config( function($mdThemingProvider){
       // Configure a dark theme with primary foreground yellow
@@ -139,6 +140,9 @@
                     })
                     .when('/Candidate/Add', {
                         templateUrl: 'modules/candidate/add-candidate.html',
+                    })
+                     .when('/Candidate/ImportUserData', {
+                        templateUrl: 'modules/candidate/importUserData.html',
                     })
                     .when('/Candidate/Track/:candidateId/:jobId', {
                         templateUrl: 'modules/candidate/track-candidate.html',
