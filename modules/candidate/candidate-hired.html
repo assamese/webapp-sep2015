@@ -1,0 +1,34 @@
+﻿<div class="row mar-bot-20 " ng-controller="candidateController" ng-init="GetHiredCandidates()">
+    <div class="col-lg-12">
+        <div class="mail-apps-wrap">
+            <div class="panel-success">
+                <div class="panel-heading ">
+                    <h3 class="panel-title panel_space pad-bot-0">
+                        <i class="fa fa-user "></i>Hired Candidate</h3>
+                </div>
+            </div>
+            <div class="the-box no-margin apply_job" ng-repeat="candidate in candidates">
+                <div class="row">
+                    <div class="col-lg-1 col-md-2 col-sm-2 col-xs-12 margin-bottom">
+                        <a href="#/Candidate/Profile/{{candidate.id}}/{{jobId}}">
+                            <img class="cen-block" src="{{candidate.avtar}}" alt="Avatar" width="60"></a></div>
+                    <div class="col-lg-8 col-md-6 col-sm-5 col-xs-12 margin-bottom cent-text">
+                        <h3 class="name no-mar">
+                            <a class="clr-grey" href="#/Candidate/Profile/{{candidate.id}}/{{jobId}}">{{candidate.name}}</a></h3>
+                    </div>
+                    <div class=" col-sm-5 col-xs-12 mar-top-lg cent-text">
+                        <a href="#/Checkin-out/{{candidate.email}}" class="btn red-color mar-right-5px mar-top-5px">Check In/Out</a>
+                        <a href="{{candidate.resume}}" class="btn red-color mar-right-5px mar-top-5px">Resume</a> 
+                        <a href="#/Chat" class="btn red-color mar-right-5px mar-top-5px">Chat</a> 
+                        <a href="#/Review/List/{{candidate.id}}/{{jobId}}/{{candidate.email}}" class="btn red-color mar-right-5px mar-top-5px">Reviews</a>
+                        <a href="#/Candidate/Track/{{candidate.id}}/{{jobId}}" class="btn red-color mar-right-5px mar-top-5px">Track</a>
+                    </div>
+
+                </div>
+            </div>
+            <div ng-show="IsCandidateFound">
+                No candidate has been hired
+            </div>
+        </div>
+    </div>
+</div>

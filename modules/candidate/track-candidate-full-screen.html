@@ -1,0 +1,15 @@
+<div class="container" ng-controller="candidateController" ng-init="InitTrackCandidate()">
+	<div class="row">
+		<div class="col-sm-6 candidate-name-label">
+			<label class="open-new-tab-link">Candidate: {{candidateBeingTracked.name}}</label>
+		</div>
+		<div class="col-sm-6 refresh-btn-track-fullscreen">
+			<md-button ng-hide="isMarkerDataLoading" ng-click="TrackCandidate()" class=" md-raised md-primary post-invite-interview-btn" ng-click="SendSurvey(false)">Refresh</md-button>
+		</div>            
+	</div>
+	<map zoom="{{map_zoom}}" center="38.8833,-97.0167" style="height:600px">
+
+	<marker ng-repeat="o in markers" position="[ {{ o.lat }} , {{ o.long }} ]" centered="true" icon="{{circle}}" ></marker>
+
+	</map>
+</div>

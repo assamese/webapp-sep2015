@@ -1,0 +1,40 @@
+<div ng-controller="candidateController" ng-init="MarkHiredInit()">
+    <div class="row" ng-show="jobs.length && !areJobsLoading && !IsJobSavedSuccess">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        	<p class="alert alert-danger" ng-show="noJobSelected">Please Select A Job To Continue</p>
+        	<form ng-submit="markCandidateAsHired()">
+        		
+	        	<select class="form-control" ng-model="taskId">
+	        		<option value="-1">Please Select A Job To Assign</option>
+	        		<option ng-repeat="job in jobs" value="{{job.taskId}}">{{job.name | limitTo:'50'}}</option>
+	        	</select>
+	        	
+	        	<br/>
+	        	
+	        	<input type="submit" value="Mark Hired" class="btn btn-primary btn-block">
+        	</form>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+    </div>
+    <div class="row" ng-show="areJobsLoading">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        	{{loadingMsg}}
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+    </div>
+    
+    <div class="row" ng-show="jobsError && !areJobsLoading">
+    	<br/><br/>
+    	<p class="alert alert-danger">
+    		<strong>{{jobsErrorMsg}}</strong>
+		</p>
+    </div>
+    <div class="row" ng-show="IsJobSavedSuccess">
+    <br/><br/>
+    	<p class="alert alert-success">
+    		<strong>Entry Saved Successfully <a href="#/Candidate/All">Click Here</a> To Go Back.</strong>
+    	</p>
+	</div>
+</div>

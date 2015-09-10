@@ -1,0 +1,125 @@
+﻿<section class="container" ng-controller="jobController" ng-init="PopulateData()">
+    <div class="row">
+        <!--<div class="panel-success col-lg-12">
+            <div class="panel-heading ">
+                <h3 class="panel-title panel_space pad-bot-0">
+                    <i class="fa fa-user "></i>{{header}}</h3>
+                <input type="hidden" ng-model="job.id" />
+                <input type="hidden" ng-model="job.isApproved" />
+            </div>
+        </div> -->
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 post-invite-interview-list-left">
+            <h1 class="post-job-header">POST A JOB</h1>
+            <p class="post-job-header-p">
+                Fill out the following information and click “Post Job” to create a new<br/> job listing.
+            </p>
+            <md-content layout-padding>
+                    <md-input-container flex>
+                        <label>Job Name</label>
+                        <textarea ng-model="job.name"></textarea>
+                    </md-input-container>
+                    <md-input-container flex>
+                        <label>Hourly Pay($)</label>
+                        <textarea ng-model="job.price"></textarea>
+                    </md-input-container>
+                    <md-input-container flex>
+                        <label>Zip Code</label>
+                        <textarea ng-model="job.zipcode"></textarea>
+                    </md-input-container>
+                    <div layout layout-sm="column">
+                    <md-input-container flex>
+                        <label>MM</label>
+                        <md-select ng-model="job.month">
+                            <md-option value="0">Jan</md-option>
+                            <md-option value="1">Feb</md-option>
+                            <md-option value="2">Mar</md-option>
+                            <md-option value="3">Apr</md-option>
+                            <md-option value="4">May</md-option>
+                            <md-option value="5">Jun</md-option>
+                            <md-option value="6">Jul</md-option>
+                            <md-option value="7">Aug</md-option>
+                            <md-option value="8">Sep</md-option>
+                            <md-option value="9">Oct</md-option>
+                            <md-option value="10">Nov</md-option>
+                            <md-option value="11">Dec</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container flex>
+                        <label>DD</label>
+                        <md-select ng-model="job.day">
+                            <md-option value="1">1</md-option>
+                            <md-option value="2">2</md-option>
+                            <md-option value="3">3</md-option>
+                            <md-option value="4">4</md-option>
+                            <md-option value="5">5</md-option>
+                            <md-option value="6">6</md-option>
+                            <md-option value="7">7</md-option>
+                            <md-option value="8">8</md-option>
+                            <md-option value="9">9</md-option>
+                            <md-option value="10">10</md-option>
+                            <md-option value="11">11</md-option>
+                            <md-option value="12">12</md-option>
+                            <md-option value="13">13</md-option>
+                            <md-option value="14">14</md-option>
+                            <md-option value="15">15</md-option>
+                            <md-option value="16">16</md-option>
+                            <md-option value="17">17</md-option>
+                            <md-option value="18">18</md-option>
+                            <md-option value="19">19</md-option>
+                            <md-option value="20">20</md-option>
+                            <md-option value="21">21</md-option>
+                            <md-option value="22">22</md-option>
+                            <md-option value="23">23</md-option>
+                            <md-option value="24">24</md-option>
+                            <md-option value="25">25</md-option>
+                            <md-option value="26">26</md-option>
+                            <md-option value="27">27</md-option>
+                            <md-option value="28">28</md-option>
+                            <md-option value="29">29</md-option>
+                            <md-option value="30">30</md-option>
+                            <md-option value="31">31</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container flex>
+                        <label>YYYY</label>
+                        <md-select ng-model="job.year">
+                            <md-option value="2015">2015</md-option>
+                            <md-option value="2016">2016</md-option>
+                            <md-option value="2017">2017</md-option>
+                            <md-option value="2018">2018</md-option>
+                            <md-option value="2019">2019</md-option>
+                            <md-option value="2020">2020</md-option>
+                            <md-option value="2021">2021</md-option>
+                            <md-option value="2022">2022</md-option>
+                            <md-option value="2023">2023</md-option>
+                            <md-option value="2024">2024</md-option>
+                            <md-option value="2025">2025</md-option>
+                            <md-option value="2026">2026</md-option>
+                        </md-select>
+                    </md-input-container>
+                  </div>
+            </md-content>
+            <!-- time picker -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <label> Start Time:</label><br/>    
+                    <timepicker ng-model="job.start_time" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+                </div>
+                <div class="col-sm-6 ">
+                    <label> End Time:</label><br/>    
+                    <timepicker ng-model="job.end_time" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+                </div>
+            </div>
+            <!-- time picker ends -->
+
+            <md-button class="md-raised md-primary post-invite-interview-btn" ng-click="PostJob()">{{button_text}}</md-button>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 post-invite-interview-list-right">
+            <ol>
+                <li><img src="assets/img/post-job.png" /> Post a job</li>
+                <li><img src="assets/img/user.png" /> Invite Candidates</li>
+                <li><img src="assets/img/check.png" /> Interview and Hire</li>
+            </ol>
+        </div>
+    </div>
+</section>

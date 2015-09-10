@@ -1,0 +1,51 @@
+﻿<div class="row" ng-controller="reviewController" ng-init="PopulateData()">
+    <div class="col-lg-8 col-lg-offset-2">
+        <div class="mail-apps-wrap">
+            <div class="the-box no-margin apply_job">
+                <!-- /.row -->
+                <div class="row apply_margin">
+                    <div class=" col-md-5 col-sm-4 col-xs-12">
+                        <a href="#" class="thumbnail text-center no-bor">
+                            <img src="{{company.avtar}}" width="150">
+                            <h3 class="clr-blue my-pos">
+                                {{company.name}}</h3>
+                        </a>
+                    </div>
+                    <div class="col-md-2 visible-md visible-lg">
+                        <img class="center-block" src="img/ticke.png">
+                    </div>
+                    <div class="col-md-5 col-sm-4 col-xs-12">
+                        <a href="#" class="thumbnail text-center no-bor">
+                            <img src="{{candidate.avtar}}" width="150">
+                            <h3 class="clr-blue my-pos">
+                                {{candidate.name}}</h3>
+                        </a>
+                    </div>
+                </div>
+                <div class="row apply_margin text-center">
+                    <p class="has-margin text-center">
+                        <!--<i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i
+                            class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning">
+                            </i>
+                            -->
+                        <hmrating hmupto="5" hmid="r1" hmcolor="orange" rate="rate"></hmrating>
+                        <strong style="margin-left: 20px;">Click for Star Rating</strong>
+                        <!--   ng-model="Review.rating"-->
+                        <input type="hidden" ng-model="rate" />
+                    </p>
+                </div>
+                <div class=" apply_margin text-center">
+                    <p>
+                        <textarea class="form-control input-lg rounded bold-border no-resize" style="height: 200px;"
+                            placeholder="Write Your Reveiw" ng-model="Review.review"></textarea>
+                    </p>
+                </div>
+                <div class="row apply_margin text-center" style="margin-top: 5px;">
+                    <input type="button" value="Submit" ng-click="WriteReview()" ng-disabled="IsButtonClick"
+                        class="btn  red-color" />
+                </div>
+            </div>
+            <!-- /.the-box -->
+        </div>
+    </div>
+</div>

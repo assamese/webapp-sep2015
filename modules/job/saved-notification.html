@@ -1,0 +1,26 @@
+﻿<div class="container" ng-controller="jobController" ng-init="JobSavedNotification()">
+    <div class="mail-apps-wrap ">
+        <div class="the-box no-margin apply_job  min_hgt">
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="top_none">
+                        Your Job was submitted successfully</h2>
+                    <p>
+                        This job will be visible to candidates after it is approved by our staff. You can
+                        click on the Job Description below to edit the job
+                    </p>
+                    
+                </div>
+                <div class="clearfix">
+                </div>
+                <div class="clearfix">
+                </div>
+                <a class="margin_top20" href="#/Job/Edit/{{jobId}}" style="padding: 10px 20px; display: block;
+                    border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; color: #E74C3D; font-weight: bold;">
+                    {{jobTitle}}</a>
+            </div>
+        </div>
+        <!-- /.the-box -->
+    </div>
+</div>

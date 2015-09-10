@@ -1,0 +1,200 @@
+﻿<div class="row" ng-controller="candidateController" ng-init="PopulateCandidateInfo()">
+
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <!-- BEGIN PROFILE CARD  -->
+                <div class="the-box no-border full card-info">
+                    <div class="the-box no-border text-center no-margin">
+                        <!-- /.right-action -->
+                        <h4 class="bolded">
+                            {{candidate.name}}</h4>
+                        <img src="{{candidate.avtar}}" class="social-avatar has-margin has-light-shadow img-circle" height="200" 
+                            alt="Avatar">
+                        <p class="bordered">
+                            <i class="fa fa-map-marker"></i><strong>{{candidate.location}}</strong></p>
+                        <!--,{{candidate.city}}-->
+                        <p class="has-margin text-center">
+                            <i class="fa fa-star {{candidate.rating.avgRating > num ? 'text-warning':' '}}" ng-repeat="num in [0,1,2,3,4]">
+                            </i>
+                        </p>
+                    </div>
+                    <!-- /.the-box .no-border .bg-info .no-margin -->
+                    <ul class="btn-nav">
+                        <li><a ng-href="{{candidate.resume}}" class="btn red-color btn-sm" target="{{candidate.isResumeAttached?'_blank':'_self'}}">
+                            Resume</a> </li>
+                        <li><a href="#/Chat" class="btn red-color btn-sm">Chat</a></li>
+                        <li ng-show="jobId"><a href="#/Hire/{{jobId}}/{{candidate.id}}" class="btn red-color btn-sm">Hire</a></li>
+                    </ul>
+                    <a ng-show="jobId" href="#/Review/Post/{{jobId}}/{{candidate.id}}" class="btn btn-primary btn-block btn-lg btn-square">
+                        <i class="fa fa-pencil"></i>Write Review</a>
+                </div>
+                <!-- /.the-box -->
+                <!-- END PROFILE CARD  -->
+            </div>
+            <!-- /.col-sm-6 .col-md-6 .col-lg-12 -->
+            <!-- /.col-sm-6 .col-md-6 .col-lg-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.col-lg-4 -->
+    <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
+        <!-- BEGIN PROPERTY DETAIL TAB -->
+        <div class="panel with-nav-tabs panel-success01 panel-square panel-no-border">
+            <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                    <li class="{{isShowAboutScreen?'active':''}}"><a href="javascript:void(0);" ng-click="ShowAboutScreen()">
+                        About</a></li>
+                    <li class="{{isShowPhotoscreen?'active':''}}"><a href="javascript:void(0);" ng-click="ShowPhotoScreen()">
+                        Photos</a></li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade {{isShowAboutScreen?'active in':''}}" ng-show="isShowAboutScreen">
+                        <div class="the-box no-border property-list">
+                            <div class="panel-success">
+                                <div class="panel-heading ">
+                                    <h3 class="panel-title panel_space">
+                                        <i class="fa fa-user "></i> Profile</h3>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <a class="pull-left" href="#fakelink"></a>
+                                <div class="media-body">
+                                    <a href="#fakelink"></a>
+                                    <p class="">
+                                    <ul class="nav-info">
+                                        <li>
+
+                                            <i class="fa fa-pencil-square"  ng-click="aboutForm.$show()" ng-hide="aboutForm.$visible">
+                                            </i>
+                                            <span editable-text="candidate.about" e-form="aboutForm" onbeforesave="updateUser('about', $data, candidate.email)">
+                                            <strong>About:</strong> {{candidate.about}}
+                                            </span> 
+                                        </li>
+
+                                        <li>
+
+                                            <i class="fa fa-pencil-square"  ng-click="verifiedFacebookIDForm.$show()" ng-hide="verifiedFacebookIDForm.$visible">
+                                            </i>
+                                            <span editable-text="candidate.verifiedFacebookID" e-form="verifiedFacebookIDForm" onbeforesave="updateUser('verifiedFacebookID', $data, candidate.email)">
+                                            <strong>Verified Facebook ID:</strong> 
+                                                <span ng-if="candidate.verifiedFacebookID">
+                                                <a target="_blank" href="https://www.facebook.com/{{candidate.verifiedFacebookID}}"/> www.facebook.com/{{candidate.verifiedFacebookID}}</a>
+                                                </span>
+                                            </span> 
+
+                                        </li>
+
+                                    </ul>
+                                    </p>
+                                </div>
+                                <!-- /.media-body -->
+                            </div>
+                            <!-- /.media -->
+                        </div>
+                        <div class="the-box no-border property-list">
+                            <div class="panel-success">
+                                <div class="panel-heading ">
+                                    <h3 class="panel-title panel_space">
+                                        <i class="fa fa-user "></i> Personal Information</h3>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="media-body">
+                                            <ul class="nav-info">
+                                                <li>
+                                                <i class="fa fa-circle" style='color:#f00'>    
+                                                </i>
+                                                <strong>Email :</strong> {{candidate.email}} 
+                                                </li>
+
+<li>
+    <i class="fa fa-pencil-square"  ng-click="linksForm.$show()" ng-hide="linksForm.$visible" >
+        
+    </i>
+    <span editable-text="candidate.links" e-form="linksForm" onbeforesave="updateUser('links', $data, candidate.email)">
+        <strong>Links :</strong> <a href="http://{{candidate.links}}" class="mar-right-5px" target="blank">{{candidate.links}}</a>
+    </span> 
+</li>
+
+<li>
+    <i class="fa fa-pencil-square" ng-click="ownVehicleForm.$show()" ng-hide="ownVehicleForm.$visible" ></i>
+    <span editable-radiolist="candidate.ownVehicle" e-ng-options="s.value as s.text for s in yesNoOptions" e-form="ownVehicleForm" onbeforesave="updateUser('ownVehicle', $data, candidate.email)">
+        <strong>Own Vehicle :</strong> {{candidate.ownVehicle}} 
+    </span>
+</li>
+<li>
+    <i class="fa fa-pencil-square" ng-click="vehicleTypeForm.$show()" ng-hide="vehicleTypeForm.$visible"></i>
+    <span editable-text="candidate.vehicleType" e-form="vehicleTypeForm" onbeforesave="updateUser('vehicleType', $data, candidate.email)">
+        <strong>Vehicle Type : </strong>{{candidate.vehicleType}}
+    </span>
+</li>
+<li>
+    <i class="fa fa-pencil-square" ng-click="phoneNumberForm.$show()" ng-hide="phoneNumberForm.$visible"></i>
+    <span editable-text="candidate.phoneNumber" e-form="phoneNumberForm" onbeforesave="updateUser('phoneNumber', $data, candidate.email)">
+        <strong>Phone :</strong> {{candidate.phoneNumber}} 
+    </span>
+</li>
+<li>
+    <i class="fa fa-pencil-square" ng-click="languagesKnownForm.$show()" ng-hide="languagesKnownForm.$visible"></i>
+    <span editable-text="candidate.languagesKnown" e-form="languagesKnownForm" onbeforesave="updateUser('languagesKnown', $data, candidate.email)">
+        <strong>Language Known :</strong> {{candidate.languagesKnown}}
+    </span>
+</li>
+<li>
+    <i class="fa fa-pencil-square" ng-click="skillsForm.$show()" ng-hide="skillsForm.$visible"></i>
+    <span editable-text="candidate.skills" e-form="skillsForm" onbeforesave="updateUser('skills', $data, candidate.email)">
+        <strong>Skills :</strong> {{candidate.skills}} 
+    </span>
+</li>
+<li>
+    <i class="fa fa-pencil-square" ng-click="driversLicenseForm.$show()" ng-hide="driversLicenseForm.$visible"></i>
+    <span editable-radiolist="candidate.driversLicense" e-ng-options="s.value as s.text for s in yesNoOptions" e-form="driversLicenseForm" onbeforesave="updateUser('driversLicense', $data, candidate.email)">
+        <strong>Drivers-License :</strong> {{candidate.driversLicense}} 
+    </span>
+</li>
+                                            </ul>
+                                        </div>
+                                        <!-- /.media-body -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade {{isShowPhotoscreen?'active in':''}}" ng-show="isShowPhotoscreen">
+                        <div class="row">
+                            <div class="col-xs-6 col-md-3" ng-repeat="image in images">
+                                <div class="thumbnail">
+                                    <a href="{{image.imageUrl}}" target="_blank">
+                                        <img src="{{image.imageUrl}}" height="100px" width="100px"></a>
+                                </div>
+                                <div style="text-align: center">
+                                    <span>{{image.caption}}</span>
+                                    <br />
+                                    <span>Photo from {{image.photoTakenType}}</span><br />
+                                    <span ng-show="image.isLocation">Taken at this <a href="http://www.google.com/maps/place/{{image.geoCode.latitude}},{{image.geoCode.longitude}}"
+                                        target="_blank">Location</a></span>
+                                    <span>{{image.createdAt| date:'MMM dd , yyyy' }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-md-3" ng-show="images.length==0">
+                                No photos available
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.tab-pane fade -->
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel .panel-success -->
+        <!-- END PROPERTY DETAIL TAB -->
+    </div>
+    <!-- /.col-lg-8 -->
+</div>

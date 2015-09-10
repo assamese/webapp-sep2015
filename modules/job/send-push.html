@@ -1,0 +1,7 @@
+<div class="row" ng-init="sendPush()">
+    <div class="col-lg-12">
+		<h4 ng-show="dataLoading">Please wait....</h4>
+		<h4 ng-show="successResponse">A push notification was sent to the candidate.</h4>
+		<h4 ng-show="failResponse">{{response}}</h4>
+	</div>
+</div>

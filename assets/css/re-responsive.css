@@ -1,0 +1,108 @@
+@media screen and (min-width: 768px) {
+    .right-buttons {
+    	float: right;
+    }
+    .brand-logo{
+    	float: left;
+    }
+    .navigation-bar-espronto a{
+        border-right: solid thin rgba(255,255,255,0.3);
+    }
+    .canidate-all-top-tagline-innerdiv{
+        padding-left: 0;
+        padding-right: 0;   
+    }
+    .candidate-all-content-ul{
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .refresh-btn-track-fullscreen{
+        text-align: right;
+    }
+}
+@media screen and (max-width: 767px) {
+    .survey-tabs-body-left{
+        border: none; 
+    }
+    .survey-tabs-footer div{
+        padding: 0;
+    }
+    .survey-tabs-body-tab > div:nth-child(2){
+        padding-left: 0;
+    }
+}
+@media screen and (max-width: 768px) {
+    .right-buttons {
+        border: 1px solid #dadada;
+    }
+    .open-jobs-left-jobslist li{
+        padding: 25px;
+    }
+    .open-jobs-right-bottom-left{
+        padding: 25px;
+    }
+    .open-jobs-left-jobslist{
+        height: auto;
+        max-height: 500px;
+    }
+    .open-jobs-left{
+        border:none;
+    }
+}
+@media screen and (max-width: 640px) {
+    /* open jobs page*/
+    .espronto-nav{
+        padding: 5px 0;
+    }
+    .breadcrumb{
+        padding-left: 15px;
+    }
+    .row.open-jobs-right-top li {
+        float: none;
+    }
+    .post-invite-interview-list-right img{
+        display: block;
+    }
+    .canidate-all-hireinvite{
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .candidate-all-content-ul > li{
+        padding-right: 0;
+    }
+    .candidate-all-content-ul > li > div:nth-child(2){
+        padding-left: 30px;
+    }
+}
+
+@media screen and (min-width: 990px) {
+    .navbar-brand{
+        margin-left: -35px;
+    }
+    .open-jobs-right-bottom-left{
+        min-height: 700px;
+    }
+    .navigation-bar-espronto a{
+        padding: 10px 60px !important;
+    }
+    .open-jobs-right-bottom-left{
+        border-right: solid thin #dbdbdb;
+        border-bottom: none;
+        padding-bottom: 0px;
+    }
+    .candidate-all-content-ul > li:nth-child(odd){
+        border-right: solid thin #dbdbdb;
+    }
+    .candidate-all-content-ul > li:nth-child(even){
+        padding-left: 45px;
+        padding-right: 0;
+    }
+}
+@media screen and (max-width: 990px) {
+    .open-jobs-right-top{
+        border-top: 1px solid #dadada;
+    }
+    .post-invite-interview-list-left{
+        border: none;
+    }
+}

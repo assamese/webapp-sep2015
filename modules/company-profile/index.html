@@ -1,0 +1,63 @@
+﻿<section class='container'>
+    
+<div class="row" ng-controller="profileController" ng-init="PopulateCompanyInfo()">
+    <!-- /.col-lg-4 -->
+    <div class="col-lg-8">
+        <div class="mail-apps-wrap">
+            <div class="the-box no-margin apply_job">
+                <div class="row apply_margin">
+                    <div class="col-lg-3">
+                        <h5>
+                            Company Name</h5>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="reply">
+                            <h5>
+                                {{company.name}}</h5>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <div class="row apply_margin">
+                    <div class="col-lg-3">
+                        <h5>
+                            Company Url</h5>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="reply">
+                            <h5>
+                               <a href="http://{{company.links}}" class="mar-right-5px" target="blank">{{company.links}}</a> </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="row apply_margin">
+                    <div class="col-lg-3">
+                        <h5>
+                            Company Description</h5>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="reply">
+                            <h5>
+                                {{company.about}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.the-box -->
+        </div>
+    </div>
+    <!-- /.col-lg-8 -->
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <!-- BEGIN PROFILE CARD  -->
+                <div class="the-box no-border full card-info">
+                    <div class="the-box no-border text-center no-margin">
+                        <img src="{{company.avtar}}" alt="Avatar">
+                    </div>
+                </div> 
+            </div> 
+        </div>
+    </div>
+</div>
+</section>

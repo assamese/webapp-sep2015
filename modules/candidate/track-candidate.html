@@ -1,0 +1,21 @@
+<div class="container" ng-controller="candidateController" ng-init="InitTrackCandidate()">
+	<div ng-show="isMarkerDataLoading || !isMarkerDataAvailable">
+		<h3> Please wait for the staff member to turn on the GPS/Give-consent to your Tracking request. This screen will auto-refresh. You may also press the refresh-button. </h3>
+	</div>
+	<div class="row">
+		<div class="col-sm-6 candidate-name-label">
+				<a class="open-new-tab-link" href="#/Candidate/Track-full-screen/{{candidateId}}/{{jobId}}" target="_blank">
+					<i class="icon-external-link"></i> open in new tab
+				</a>
+		</div>
+		<div class="col-sm-6 refresh-btn-track-fullscreen">
+			<md-button ng-hide="isMarkerDataLoading" ng-click="TrackCandidate()" class=" md-raised md-primary post-invite-interview-btn">Refresh</md-button>
+		</div>            
+	</div>
+            
+	<map zoom="{{map_zoom}}" center="38.8833,-97.0167" >
+
+	<marker ng-repeat="o in markers" position="[ {{ o.lat }} , {{ o.long }} ]" centered="true" icon="{{circle}}" ></marker>
+
+	</map>
+</div>

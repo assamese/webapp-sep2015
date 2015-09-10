@@ -1,0 +1,105 @@
+@media (max-width: 480px)
+{
+
+    .wrapper
+    {
+        margin-top: 0;
+    }
+
+    .conversation-wrap
+    {
+        -moz-box-shadow: -2px 0 3px #ddd;
+        -webkit-box-shadow: -2px 0 3px #ddd;
+        box-shadow: -2px 0 3px #ddd;
+        margin-top: 50px;
+        max-height: 552px;
+        overflow: auto;
+        padding: 0;
+    }
+
+    .msg-wrap
+    {
+        max-height: 205px;
+        overflow: auto;
+        padding: 10px;
+    }
+
+    .btn-color
+    {
+        background: #e84f40;
+        color: #fff;
+        margin-bottom: 8px;
+        margin-top: 18px;
+    }
+
+    .massage
+    {
+        margin-left: 20px;
+        width: 218px;
+    }
+
+
+
+
+
+
+
+
+
+
+}
+
+
+@media (min-width: 480px) and (max-width: 767px)
+{
+    .wrapper
+    {
+        margin-top: 0;
+    }
+
+    .massage
+    {
+        text-align: left;
+        width: 265px;
+    }
+
+    .conversation-wrap
+    {
+        -moz-box-shadow: -2px 0 3px #ddd;
+        -webkit-box-shadow: -2px 0 3px #ddd;
+        box-shadow: -2px 0 3px #ddd;
+        margin-top: 50px;
+        max-height: 552px;
+        overflow: auto;
+        padding: 0;
+    }
+
+    .btn-color
+    {
+        background: #e84f40 none repeat scroll 0 0;
+        color: #fff;
+        margin-bottom: 8px;
+        margin-top: 18px;
+    }
+
+
+
+
+}
+
+@media (min-width: 768px) and (max-width: 979px)
+{
+    .wrapper
+    {
+        margin-top: 0;
+    }
+
+}
+
+@media (min-width: 969px) and (max-width: 1169px)
+{
+    .wrapper
+    {
+        margin-top: 0;
+    }
+}

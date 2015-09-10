@@ -1,0 +1,77 @@
+﻿<div class="row" ng-controller="reviewController" ng-init="GetReviews()">
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <!-- BEGIN PROFILE CARD  -->
+                <div class="the-box no-border full card-info">
+                    <div class="the-box no-border text-center no-margin">
+                        <!-- /.right-action -->
+                        <h4 class="bolded">
+                            {{candidate.name}}</h4>
+                        <img src="{{candidate.avtar}}" class="social-avatar has-margin has-light-shadow img-circle"
+                            alt="Avatar">
+                        <p class="bordered">
+                            <i class="fa fa-map-marker"></i><strong>{{candidate.location}}</strong></p> <!--,{{candidate.city}}-->
+                        <h2 class="clr-blue">
+                           {{candidate.rating.avgRating | number:1}}</h2>
+                        <p class="has-margin text-center">
+                            <i class="fa fa-star {{candidate.rating.avgRating > num ? 'text-warning':' '}}" ng-repeat="num in [0,1,2,3,4]">
+                            </i>
+                        </p>
+                        <p>
+                            Total {{candidate.rating.totalReviews}}
+                        </p>
+                    </div>
+                    <!-- /.the-box .no-border .bg-info .no-margin -->
+                    <a href="#/Review/Post/{{jobId}}/{{candidate.id}}" class="btn btn-primary btn-block btn-lg btn-square">
+                        Write a Review</a>
+                </div>
+                <!-- /.the-box -->
+                <!-- END PROFILE CARD  -->
+            </div>
+            <!-- /.col-sm-6 .col-md-6 .col-lg-12 -->
+            <!-- /.col-sm-6 .col-md-6 .col-lg-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.col-lg-4 -->
+    <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
+        <!-- BEGIN PROPERTY DETAIL TAB -->
+        <div class="panel with-nav-tabs panel-success01 panel-square panel-no-border" ng-repeat="review in reviews">
+            <div class="panel-body">
+                <div class="list-group success square no-side-border">
+                    <div class="list-group-item mar-bot-20 ">
+                        <div class="row">
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <span class="name rev-class"></span>
+                                <p style="margin-top: 10px; font-size: 13px; color: #999999;">
+                                    {{review.review}}</p>
+                            </div>
+                            <div class="col-lg-3 text-right">
+                                <h2 class="clr-blue" style="margin-top: 12PX;">
+                                    {{review.rating | number:1}}</h2>
+                                <p class="has-margin text-right">
+                                    <i class="fa fa-star {{review.rating > num ? 'text-warning':' '}}" ng-repeat="num in [0,1,2,3,4]">
+                                    </i>
+                                </p>
+                                <p>
+                                    {{review.date | date:'MMM dd , yyyy' }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel .panel-success -->
+        <!-- END PROPERTY DETAIL TAB -->
+        <div ng-show="IsReviewFound = reviews.length == 0">
+            No review yet
+        </div>
+    </div>
+    <!-- /.col-lg-8 -->
+</div>

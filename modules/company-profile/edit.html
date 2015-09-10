@@ -1,0 +1,41 @@
+﻿<section class="container">
+    <div class="row" ng-controller="profileController" ng-init="PopulateCompanyInfo()">
+        <h1 class="edit-company-profile-header">Edit Company Details</h1>
+        <input type="hidden" ng-model="company.id" />
+        <section class="row">
+            <div class="col-lg-7">
+                <div class="row">
+                    <div class="col-lg-3 edit-company-profile-left">
+                    
+                        <img src="{{company.avtar}}" alt="Avatar" class="edit-company-profile-dp">
+                    </div>
+                    <div class="col-lg-9 edit-company-profile-right">
+                        <md-content class="edit-company-profile-form">
+                            <md-input-container flex class="edit-company-profile-form-item">
+                                <label>Company Name</label>
+                                <textarea ng-model="company.name"></textarea>
+                            </md-input-container>
+                            <md-input-container flex class="edit-company-profile-form-item">
+                                <label>Company URL</label>
+                                <textarea ng-model="company.links"></textarea>
+                            </md-input-container>
+                            <md-input-container flex class="edit-company-profile-form-item">
+                                <label>Company Description</label>
+                                <textarea ng-model="company.about"></textarea>
+                            </md-input-container>
+                        </md-content>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form id="fileupload" style="display:none" name="fileupload" class="pull-left" enctype="multipart/form-data" method="post">
+                        <input type="file" id="dp-uploader" name="file" class="md-raised md-warn pull-right edit-company-profile-form-btn" onchange="angular.element(this).scope().uploadCompanyLogo(this.files)" class="edit-company-profile-form-btn" />
+                        </form>
+                        <md-button onclick="callUploader()" class="md-raised md-warn pull-left edit-company-profile-form-btn edit-company-profile-form-file-btn">Upload New</md-button>
+                        <md-button class="md-raised md-warn pull-right edit-company-profile-form-btn" ng-click="UpdateProfile()">Update</md-button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>

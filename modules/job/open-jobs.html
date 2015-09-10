@@ -1,0 +1,247 @@
+<section class="container open-jobs" ng-controller="jobController" ng-init="GetJobs()">
+<div class="row">    
+    <div class="row open-jobs-loader" ng-show="isJobsLoading">
+        <div class="col-lg-12 text-center">
+            <img src="assets/img/red_loader.gif"><br/><br/>
+            <h1>Please wait...</h1>
+        </div>
+    </div>
+    <div class="row open-jobs-loader" ng-show="!isJobsLoading && jobs.length==0">
+        <div class="col-lg-12 text-center">
+            <h1>Sorry, No open jobs found...</h1>
+        </div>
+    </div>
+    <div class="col-lg-4 open-jobs-left" ng-show="!isJobsLoading && jobs.length">
+        <ul class="open-jobs-left-jobslist">
+            <li ng-repeat="job in jobs" ng-class="{'open-jobs-left-jobslist-link-active' : job.taskId==currentJob.taskId}">
+                <a class="open-jobs-left-jobslist-link" ng-click="resetCurrentJob(job)">
+                    <h1>{{job.name  | limitTo : 35}}</h1>
+                    <p><i>{{job.createdAt |  date:"MM/dd/yyyy" }}</i></p>
+                    <p>{{job.name  | limitTo : 100}}...</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-lg-8 open-jobs-right" ng-show="!isJobsLoading && jobs.length">
+        <div class="row open-jobs-right-top">
+            <ul>
+                <li>
+                    <!--it was orignally this: <a href="#/Invite/{{currentJob.taskId}}" class="list-style-icon list-style-icon-msg">
+                        Invite
+                    </a> -->
+                    <a href="#/Candidate/All/{{currentJob.taskId}}" class="list-style-icon list-style-icon-msg">
+                        Invite
+                    </a>
+                </li>
+                <li>
+                    <a href="#/Candidate/All/Mark-Hired/{{currentJob.taskId}}">
+                    <i class="fa fa-check-square-o"></i>
+                        Mark As Hired
+                    </a>
+                </li>                
+                <li>
+                    <a href="#/Survey/Send/{{currentJob.taskId}}" class="list-style-icon list-style-icon-chat">
+                        Communications
+                    </a>
+                </li>
+                <!-- <li>
+                    <a href="#/Job/send-push/{{currentJob.taskId}}" class="list-style-icon list-style-icon-send">
+                        Send Push
+                    </a>
+                </li> -->
+                <li>
+                    <a href="#/ExportTimeSheet/{{currentJob.taskId}}/{{currentJob.price}}" class="list-style-icon list-style-icon-time">
+                        Export Timesheet
+                    </a>
+                </li>
+                <li>
+                    <a href="#/Job/Edit/{{currentJob.taskId}}">
+                    <i class="icon-edit"></i>
+                        Edit Job
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="row open-jobs-right-bottom">
+            <div class="col-lg-6 open-jobs-right-bottom-left">
+                <h1>{{currentJob.name  | limitTo : 35}}</h1>
+                <p><i>{{currentJob.createdAt |  date:"MM/dd/yyyy" }}</i></p>
+                <p class="open-jobs-right-bottom-left-jobdesc">{{currentJob.name}}</p>
+                <div class="open-jobs-right-bottom-left-photostream">
+                    <h1>Photo Stream</h1>
+                    <p>The following images were uploaded for this job.</p>
+                    <md-content class="open-jobs-right-bottom-right-candidatelists">
+                        <md-tabs md-dynamic-height md-border-bottom>
+                          <md-tab label="Uploaded By Staff" class="open-jobs-right-bottom-right-tabhead">
+                            <md-content>
+                                <span ng-show="isFetchingPhotostream">Loading photos for the job...</span>
+                                <span ng-show="!isFetchingPhotostream && !photostream.length">No Photos Found.</span>
+                                <ul class="photostream-ul" ng-show="!isFetchingPhotostream"> 
+                                    <li ng-repeat="photo in photostream" ng-if="photo.facebookId!=sessionUser.facebookId">
+                                        <a href="{{photo.image.url}}" target="_blank">
+                                            <img src="{{photo.image.url}}">
+                                        </a>
+                                        <p class="text-center">
+                                            {{photo.caption   | limitTo : 10}}..<br/>
+                                            {{photo.createdAt| date:'MMM dd , yyyy'}}<br/>
+                                            <a ng-show="photo.geoCode" href="http://www.google.com/maps/place/{{photo.geoCode.latitude}},{{photo.geoCode.longitude}}"
+                                            target="_blank">Location</a>
+                                        </p>
+                                    </li>
+                                    <div class="clear"></div>
+                                </ul>
+                            </md-content>
+                          </md-tab>
+                          <md-tab label="Uploaded By You" class="open-jobs-right-bottom-right-tabhead">
+                            <md-content>
+                            <span ng-show="isFetchingPhotostream">Loading photos for the job...</span>
+                            <span ng-show="!isFetchingPhotostream && !photostream.length">No Photos Found.</span>
+                            <ul class="photostream-ul" ng-show="!isFetchingPhotostream">
+                                <li ng-repeat="photo in photostream" ng-if="photo.facebookId==sessionUser.facebookId">
+                                    
+                                    <a href="{{photo.image.url}}" target="_blank">
+                                        <img src="{{photo.image.url}}">
+                                    </a>
+                                    <p class="text-center">
+                                        {{photo.caption  | limitTo : 10}}..<br/>
+                                        {{photo.createdAt| date:'MMM dd , yyyy'}}<br/>
+                                        <a ng-show="photo.geoCode" href="http://www.google.com/maps/place/{{photo.geoCode.latitude}},{{photo.geoCode.longitude}}"
+                                        target="_blank">Location</a>
+                                    </p>
+                                    
+                                </li>
+                                <div class="clear"></div>
+                            </ul>
+                            </md-content>
+                          </md-tab>
+                        </md-tabs>
+                    </md-content>
+                </div>
+            </div>
+            <div class="col-lg-6 open-jobs-right-bottom-right">
+                <div class="text-center open-jobs-right-bottom-right-currentjobloader" ng-show="isCandidatesLoadingForCurrentJob">
+                    <br/><br/>Loading candidates...
+                </div>
+                <div class="text-center open-jobs-right-bottom-right-currentjobloader" ng-show="!isCandidatesLoadingForCurrentJob && hiredCandidatesForCurrentJob.length==0 && interestedCandidatesForCurrentJob.length==0">
+                    <br/><br/>No candidates found
+                </div>
+                <md-content class="open-jobs-right-bottom-right-candidatelists" ng-show="!isCandidatesLoadingForCurrentJob && (hiredCandidatesForCurrentJob.length|| interestedCandidatesForCurrentJob.length)">
+                    <md-tabs md-dynamic-height md-border-bottom>
+                      <md-tab label="Hired Candidates" class="open-jobs-right-bottom-right-tabhead">
+                        <md-content>
+                            <div class="text-center open-jobs-right-bottom-right-currentjobloader" ng-show="!isCandidatesLoadingForCurrentJob && hiredCandidatesForCurrentJob.length==0">
+                                <br/><br/>No hired candidates found.
+                            </div>
+
+                            <ul class="open-jobs-right-bottom-right-ul">
+                              <li ng-repeat="candidateHired in hiredCandidatesForCurrentJob">
+                                <div class="col-lg-3 col-xs-3 col-sm-2">
+                                    <img src="{{candidateHired.avtar}}" alt="candidate" align="top">
+                                </div>
+                                <div class="col-lg-9 col-xs-9 col-sm-10">
+                                    <p class="open-jobs-right-bottom-right-ul-name">
+                                       <a href="#/Candidate/Profile/{{candidateHired.id}}/{{currentJob.id}}">
+                                            {{candidateHired.name}}
+                                       </a> 
+                                    </p>
+                                    <a href="#/Chat" class="btn open-jobs-right-bottom-right-ul-btn">
+                                    Chat</a>
+                                    <!--  -->
+                                    <div class="btn-group" dropdown is-open="status.isopen">
+                                      <button id="single-button" type="button" class="btn open-jobs-right-bottom-right-ul-btn-caret" dropdown-toggle ng-disabled="disabled">
+                                         <span class="caret"></span>
+                                      </button>
+                                      <ul class="dropdown-menu open-jobs-right-bottom-right-ul-btn-dropdown" role="menu" aria-labelledby="single-button">
+                                        <!-- <li role="menuitem">
+                                        <a href="{{candidateHired.resume}}" class="btn red-color mar-right-5px mar-top-5px">Resume</a> 
+                                        </li> -->
+                                        <li role="menuitem">
+                                        <a href="#/Candidate/Track/{{candidateHired.id}}/{{currentJob.taskId}}" class="btn red-color mar-right-5px mar-top-5px">Track</a>
+                                        </li>
+                                        <li role="menuitem">
+                                        <a href="#/Checkin-out/{{candidateHired.email}}" class="btn red-color mar-right-5px mar-top-5px">Time Cards</a> 
+                                        </li>
+                                        <!-- <li role="menuitem">
+                                        <a href="#/Review/List/{{candidateHired.id}}/{{currentJob.id}}/{{candidateHired.email}}" class="btn red-color mar-right-5px mar-top-5px">Reviews</a>
+                                        </li> -->
+                                        </ul>
+                                    </div>
+                                    <!--  -->
+                                </div>
+                                <div class="clear"></div>
+                              </li>
+                          </ul>
+                        </md-content>
+                      </md-tab>
+                      <md-tab label="Applicants" class="open-jobs-right-bottom-right-tabhead">
+                        <md-content>
+                        <div class="text-center open-jobs-right-bottom-right-currentjobloader" ng-show="!isCandidatesLoadingForCurrentJob  && interestedCandidatesForCurrentJob.length==0">
+                            <br/><br/>No applicants found.
+                        </div>
+
+                          <ul class="open-jobs-right-bottom-right-ul">
+                                <li ng-repeat="candidateInterested in interestedCandidatesForCurrentJob">
+                                    <div class="col-lg-3 col-xs-3 col-sm-2">
+                                        <img src="{{candidateInterested.avtar}}" alt="candidate" align="top">
+                                    </div>
+                                    <div class="col-lg-9 col-xs-9 col-sm-10">
+                                        <p class="open-jobs-right-bottom-right-ul-name">
+                                       <a href="#/Candidate/Profile/{{candidateInterested.id}}/{{currentJob.id}}">
+                                        {{candidateInterested.name}}
+                                        </a>
+                                        </p>
+                                        <a href="#/Hire/{{currentJob.id}}/{{candidateInterested.id}}" class="btn open-jobs-right-bottom-right-ul-btn">Hire</a>
+                                        <!--  -->
+                                        <div class="btn-group" dropdown is-open="status.isopen">
+                                          <button id="single-button" type="button" class="btn open-jobs-right-bottom-right-ul-btn-caret" dropdown-toggle ng-disabled="disabled">
+                                             <span class="caret"></span>
+                                          </button>
+                                          <ul class="dropdown-menu open-jobs-right-bottom-right-ul-btn-dropdown" role="menu" aria-labelledby="single-button">
+                                            <li role="menuitem">
+                                            <a href="{{candidateInterested.resume}}" class="btn red-color mar-right-5px mar-top-5px">Resume</a> 
+                                            </li>
+                                            <li role="menuitem">
+                                            <a href="#/Chat" class="btn red-color mar-right-5px mar-top-5px">Chat</a> 
+                                            </li>
+                                            <li role="menuitem">
+                                            <a href="#/Review/List/{{candidateInterested.id}}/{{currentJob.id}}/{{candidateInterested.email}}" class="btn red-color mar-right-5px mar-top-5px">Reviews</a>
+                                            </li>
+                                            </ul>
+                                        </div>
+                                        <!--  -->
+                                    </div>
+                                    <div class="clear"></div>
+                                </li>
+                          </ul>
+                        </md-content>
+                      </md-tab>
+                    </md-tabs>
+                </md-content>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+<!-- <div class="row mar-bot-20 margin_top20" ng-controller="jobController" ng-init="GetJobs()">
+    <div class="col-lg-12" ng-repeat="job in jobs">
+        <p class="my-head">
+            <span>{{job.name  | limitTo : 30}}</span>
+            <br>
+            <a href="#/ExportTimeSheet/{{job.taskId}}/{{job.price}}" class=" pull-right red-color my-paddd mar-right-5px resp-mar">
+                Export Timesheet</a>
+           
+            <a href="#/Job/send-push/{{job.taskId}}" class=" pull-right red-color my-paddd mar-right-5px resp-mar">
+                Send Push</a>
+            <a href="#/Survey/{{job.taskId}}" class=" pull-right red-color my-paddd mar-right-5px resp-mar">
+
+                Survey</a>
+            <a href="#/Invite/{{job.taskId}}" class=" pull-right red-color my-paddd mar-right-5px resp-mar">
+                Invite</a>
+            <a href="#/Job/Edit/{{job.taskId}}" class=" pull-right red-color my-paddd mar-right-5px resp-mar">Edit
+                Job </a><a href="#/Candidate/Hired/{{job.id}}" class=" pull-right red-color my-paddd mar-right-5px resp-mar">
+                    View hired Candidates </a><a href="#/Candidate/Interested/{{job.id}}" class=" pull-right red-color my-paddd mar-right-5px resp-mar">
+                        View all Candidates </a>    
+       </p>
+    </div>
+</div>
+ -->

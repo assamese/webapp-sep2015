@@ -1,0 +1,32 @@
+﻿<div class="row mar-bot-20 margin_top20" ng-controller="checkInOutController" ng-init="PopulateData()">
+    <div class="col-lg-12">
+        <table width="100%" border="1">
+            <tr>
+                <th width="60%">
+                    Status
+                </th>
+                <th width="20%">
+                    Location
+                </th>
+                <th width="20%">
+                    Timestamp
+                </th>
+            </tr>
+            <tr ng-repeat="checkInOut in checkInOuts">
+                <td>
+                    {{checkInOut.Status}}
+                </td>
+                <td>
+                    <a href="http://www.google.com/maps/place/{{checkInOut.geoCode.latitude}},{{checkInOut.geoCode.longitude}}" ng-show="{{checkInOut.isLocation}}"
+                        target="_blank">Location</a>
+                </td>
+                <td>
+                    {{checkInOut.CreatedBy | date:'MMM dd, yyyy hh:mm'}}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div  class="col-lg-12" ng-show="checkInOuts.length==0">
+        No record found
+    </div>
+</div>

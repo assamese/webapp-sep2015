@@ -1,0 +1,54 @@
+﻿<div class="container wrapper" ng-controller="chatController" ng-init="GetUsers()">
+    <input type="hidden" ng-model="chatroom" />
+    <input type="hidden" ng-model="sender" />
+    <input type="hidden" ng-model="receiver.username" />
+    <div class="row">
+        <div class="col-lg-9 col-sm-9" id="sss">
+            <span style="color: Red"  id="chatMessage">Click on any person's name to start chatting with that person.</span>
+            <div class="chat-box-head media msg" ng-show="isChatConversationBoardShow">
+                <span>You are chatting with {{receiver.name}}</span>
+                <img src="{{receiver.avtar}}" alt="u2" class="pull-right">
+            </div>
+            <div class="msg-wrap" id="divMessageBoardContainer">
+                <div class="media msg-{{chat.isSender?'left':'right'}}" ng-repeat="chat in chats">
+                    <a class="pull-{{chat.isSender?'left':'right'}}" href="javascript:void(0);">
+                        <img class="media-object" style="width: 32px; height: 32px;" src="{{chat.avtar}}">
+                    </a>
+                    <div class="media-body">
+                        <div class="chat-box-{{chat.isSender?'left':'right'}}">
+                            <small class="pull-right time">{{chat.updatedAt | date:'MMM dd, yyyy hh:mm'}}</small>
+                            <small class="user-id">{{chat.name}}</small>
+                            <p class="massage">
+                                {{chat.message}}</p>
+                        </div>
+                    </div>
+                    <!--media-body-->
+                </div>
+            </div>
+            <!--msg-wrap"-->
+            <div class="panel-footer footer-area" ng-show="isChatConversationBoardShow">
+                <textarea class="form-control send-message" rows="3" placeholder="Send a message..."
+                    ng-model="message" id="txtmessage"></textarea>
+                <button class="btn btn-danger btn-md pull-right btn-color" id="btn-chat" ng-click="send()">
+                    Send</button>
+            </div>
+        </div>
+        <div class="conversation-wrap col-lg-3 div-sm-3">
+            <div class="media conversation" ng-repeat="user in users" ng-click="chatInitilize(sender,user)"
+                style="cursor: pointer;">
+                <a class="pull-left user-item" href="javascript:void(0);">
+                    <img class="media-object"  style="width: 33px; height: 33px;" src='{{user.avtar}}'>
+                </a>
+                <div class="media-body">
+                    <h5 class="media-heading user-name">
+                        {{user.name}}</h5>
+                </div>
+            </div>
+        </div>
+
+
+         
+
+
+    </div>
+</div>

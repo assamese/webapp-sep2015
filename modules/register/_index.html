@@ -1,0 +1,27 @@
+﻿<div class="login-wrapper" ng-controller="registerController">
+    <span>{{message}}</span>
+    <h3 style="text-align: center;">
+        Create a Free Client Account</h3>
+    <div class="form-group has-feedback lg left-feedback no-label">
+        <input type="text" class="form-control no-border input-lg rounded" placeholder="Name"
+            autofocus="true" ng-model="user.name">
+        <span class="fa fa-male form-control-feedback"></span>
+    </div>
+    <div class="form-group has-feedback lg left-feedback no-label">
+        <input type="text" class="form-control no-border input-lg rounded" placeholder="Enter email"
+            ng-model="user.email">
+        <span class="fa fa-envelope form-control-feedback"></span>
+    </div>
+    <div class="form-group has-feedback lg left-feedback no-label">
+        <input type="password" class="form-control no-border input-lg rounded" placeholder="Enter password"
+            ng-model="user.password">
+        <span class="fa fa-lock form-control-feedback"></span>
+    </div>
+    <div class="form-group">
+        <a href="javascript:void(0);" class="btn btn-warning btn-lg btn-perspective btn-block"
+            ng-click="Register()" ng-disabled="IsButtonClick">Get Started</a>
+    </div>
+    <p class="text-center">
+        <strong><small>By Creating a Account You are Agree to our <a href="http://espronto.com/terms-of-use.pdf" class="bla-clr" target="_blank">
+            <b>User Agreement</b> </a>and <a href="http://www.espronto.com/espronto-privacy-policy.pdf" class="bla-clr"  target="_blank"><b>Privacy Policies</b></a></small></strong></p>
+</div>

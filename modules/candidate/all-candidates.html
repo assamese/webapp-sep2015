@@ -1,0 +1,174 @@
+<section class="row all-candidates" ng-controller="candidateController" ng-init="GetAllCandidates()">
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title" ng-show="hireOrInvite==1">Hiring Confirmation!</h3>
+            <h3 class="modal-title" ng-show="hireOrInvite==2">Invitation Confirmation!</h3>
+            <h5 class="modal-title">Select a job and confirm</h5>
+        </div>
+        <div class="modal-body">
+            <select class="form-control" ng-model="jobSelectedFromModal">
+                <option value="-1">Please select a job</option>
+                <option value="{{item.taskId}}" ng-selected="item.taskId==jobSelectedFromModal" ng-repeat="item in items">
+                    {{ item.name | limitTo : 30 }}..
+                </option>
+            </select>
+        </div>
+        <div class="modal-footer">
+            <a class="hireinvite-modal-btn confirmbtn pull-left" href="javascript:void(0);" ng-click="ok()">Confirm</a>
+            <a class="hireinvite-modal-btn cancelbtn pull-right" href="javascript:void(0);" ng-click="cancel()">Cancel</a>
+        </div>
+    </script>
+    <div class="row open-jobs-loader" ng-show="isCandidatesLoading">
+        <div class="col-lg-12 text-center">
+            <img src="assets/img/red_loader.gif"><br/><br/>
+            <h1>Please wait...</h1>
+        </div>
+    </div>
+
+    <div class="canidate-all-top-tagline" ng-show="!isCandidatesLoading">
+        <div class="container">
+            <div class="row canidate-all-top-tagline-outerdiv">
+                <div class="col-lg-4 col-md-4  col-sm-6 canidate-all-top-tagline-innerdiv canidate-all-top-tagline-innerdiv-left">
+                    <span>My workforce</span>
+                    <span><a href="#/Candidate/Add"><i class="fa fa-plus"></i> Add new candidate</a></span>
+                </div>
+                <div class="col-lg-3 col-md-3 hidden-sm canidate-all-top-tagline-innerdiv"></div>
+                <div class="col-lg-5 col-md-5 col-sm-6 canidate-all-top-tagline-innerdiv canidate-all-top-tagline-innerdiv-right text-right" ng-show="!isCandidatesLoading && candidates.length">
+                    <span>Search by:</span>
+                    <select ng-model="candidateFilterOptions" class="canidate-all-top-tagline-innerdiv-right-select" ng-change="activateCandidateFilter()">
+                        <option value="-1">Select one</option>
+                        <option value="1">Drivers License </option>
+                        <option value="2">Zipcode </option>
+                    </select>
+
+                    <select ng-model = "candidateFilterOptionsDriversLicense" class="canidate-all-top-tagline-innerdiv-right-select" ng-show="isDriversLicenseFilterActive">
+                        <option value="1">Yes </option>
+                        <option value="0">No </option>
+                        <option value="2">Any </option>
+                    </select>
+
+                    <input type="text" ng-model="candidateFilterOptionsZipcode" placeholder="zipcode" ng-show="isZipcodeFilterActive"/>
+                    <input type="text" ng-model="candidateFilterOptionsZipcodeRadius" placeholder="radius" ng-show="isZipcodeFilterActive"/>
+                    <button class="btn" data-ng-click="filterAllCandidates()" ng-disabled="(candidateFilterOptions=='-1')?true:( (candidateFilterOptions==1)?false:(candidateFilterOptions==2)?((candidateFilterOptionsZipcodeRadius!=''&&candidateFilterOptionsZipcode!='')?false:true):true)">GO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row open-jobs-loader" ng-show="!isCandidatesLoading && (candidates.length==0) ">
+        <div class="col-lg-12 text-center">
+            <h1>Sorry, No candidate found...</h1>
+        </div>
+    </div>    
+
+    <div class="container canidate-all-hireinvite" ng-show="!isCandidatesLoading && candidates.length && filteredCandidates.length">
+        <div class="row">
+            <div class="col-lg-12 canidate-all-hireinvite-inner">
+                <!-- css classes may be same as above div as they looks same -->
+                <label>
+                    
+                <input type="checkbox" ng-model="markAllCheckbox" data-ng-click="toggleMarkAllCandidates()"/>
+                <span>
+                 Select all:
+                 </span>
+                </label>
+                <select class="canidate-all-top-tagline-innerdiv-right-select" ng-model="preSelectedHireInvite">
+                    <option value="1">Mark As Hired</option>
+                    <option value="2">Invite</option>
+                </select>            
+                <span>
+                <button ng-click="open('sm')" ng-disabled="markedCandidates.length?false:true">Apply</button>
+                <!-- <a href="javascript:void(0);" ng-click="open('sm')">Apply</a>-->
+                </span>
+                <span ng-show="markedCandidates.length==0" class='col-xs-12 alert alert-info canidate-all-hireinvite-inner-alerts'>
+                    <i class="fa fa-info-circle"></i> Mark some candidates to activate the apply button.
+                </span>
+                <span ng-show="reqProcessed" class="col-xs-12 alert alert-success canidate-all-hireinvite-inner-alerts">
+                    <i class="fa fa-check"></i> Request Processed.
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="container candidate-all-content" ng-show="!isCandidatesLoading && candidates.length">
+        <div class="row">
+            <ul class="col-lg-12 candidate-all-content-ul">
+                <li class="col-lg-6 col-md-6" ng-repeat="candidate in filteredCandidates">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 candidate-all-content-ul-liimgcontainer">
+                        <img src="{{candidate.avtar}}" alt="Avatar" />
+                        <!-- <img alt="Avatar" class="" src="http://tedxtalks.ted.com/decor/live/headshot.jpg"> -->
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                        <div class="candidate-all-content-ul-licontent">
+                            <input type="checkbox" ng-checked="(markedCandidates.indexOf(candidate.id) > -1) ?true:false" data-ng-click="toggleMarkCandidate(candidate)"/>
+                            <h1>
+                                <a href="#/Candidate/Profile/{{candidate.id}}/{{jobId}}">{{candidate.name}}</a></h4>
+                            </h1>
+                            <p>Most recent Job: </p>
+                            <ul>
+                                <li> 
+                                    <a ng-href="{{candidate.resume}}" target="{{candidate.isResumeAttached?'_blank':'_self'}}">
+                                    <i class="icon-file-text-alt"></i> Resume</a>
+                                </li>
+                                <li>
+                                    <a href="#/Chat"><i class="icon-comments"></i> Chat</a>
+                                </li>
+                                <li ng-show="jobId">
+                                    <a href="#/Review/List/{{candidate.id}}/{{jobId}}/{{candidate.email}}">
+                                    <i class="icon-star"></i> Reviews</a>
+                                </li>
+                                <li ng-show="jobId">                                    
+                                    <a href="#/Review/Post/{{jobId}}/{{candidate.id}}">
+                                    <i class="icon-edit"></i> Write Review</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- <div ng-controller="candidateController" ng-init="GetAllCandidates()">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <h4>   
+                <a href="#/Candidate/Add" class="btn red-color btn-lg">                
+                <i class="fa fa-user"></i>
+                    Add New Candidate
+                </a>
+            </h4>
+        </div>
+    </div>
+    <div class="row mar-bot-20">
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" ng-repeat="candidate in candidates">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="the-box no-border full card-info">
+                        <div class="the-box no-border text-center no-margin">
+                            <a href="profile.php" class="clr-blue">
+                                <h4 class="bolded">
+                                    <a href="#/Candidate/Profile/{{candidate.id}}">{{candidate.name}}</a></h4>
+                            </a>
+                            <img src="{{candidate.avtar}}" class="social-avatar has-margin has-light-shadow img-circle"
+                                alt="Avatar">
+                        </div>
+                        <ul class="btn-nav">
+                            <li><a ng-href="{{candidate.resume}}" class="btn red-color btn-sm" target="{{candidate.isResumeAttached?'_blank':'_self'}}">
+                                Resume</a> </li>
+                            <li><a href="#/Chat" class="btn red-color btn-sm">Chat</a></li>
+                            <li><a href="#/Candidate/Mark-Hired/{{candidate.id}}" class="btn red-color btn-sm">Mark As Hired</a></li>
+                            <li><a href="#/Review/List/{{candidate.id}}/{{jobId}}/{{candidate.email}}" class="btn red-color btn-sm">
+                                Reviews</a></li>
+                        </ul>
+                        <a href="#/Review/Post/{{jobId}}/{{candidate.id}}" class="btn btn-primary btn-block btn-lg btn-square">
+                            Write Review</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="IsCandidateFound">
+        No candidate has been interested yet
+    </div>
+</div>
+ -->

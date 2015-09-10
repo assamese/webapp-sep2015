@@ -1,0 +1,57 @@
+﻿<div class="container" ng-controller="candidateController" ng-init="GetInterestedCandidates()">
+    <div class="row mar-bot-20 ">
+        <div class="col-lg-12">
+            <div class="mail-apps-wrap">
+                <div class="the-box no-margin apply_job">
+                    <h3 class="panel-title">
+                        <a class="block-collapse my-hire" href="#"><strong>{{jobTitle}}</strong> </a>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mar-bot-20">
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" ng-repeat="candidate in candidates">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <!-- BEGIN PROFILE CARD  -->
+                    <div class="the-box no-border full card-info">
+                        <div class="the-box no-border text-center no-margin">
+                            <a href="profile.php" class="clr-blue">
+                                <h4 class="bolded">
+                                    <a href="#/Candidate/Profile/{{candidate.id}}/{{jobId}}">{{candidate.name}}</a></h4>
+                            </a>
+                            <img height="100" width="100" src="{{candidate.avtar}}" class="social-avatar has-margin has-light-shadow img-circle"
+                                alt="Avatar">
+                            <!--  <h2 class="clr-blue">
+                                4.0</h2
+                            {{candidate.rating}}
+                            <p class="has-margin text-center">
+                                <i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i
+                                    class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star ">
+                                    </i>
+                            </p>
+                            <p>
+                                Total 23
+                            </p>>-->
+                        </div>
+                        <ul class="btn-nav">
+                            <li><a ng-href="{{candidate.resume}}" class="btn red-color btn-sm" target="{{candidate.isResumeAttached?'_blank':'_self'}}">
+                                Resume</a> </li>
+                            <li><a href="#/Chat" class="btn red-color btn-sm">Chat</a></li>
+                            <li><a href="#/Hire/{{jobId}}/{{candidate.id}}" class="btn red-color btn-sm">Hire</a></li>
+                            <li><a href="#/Review/List/{{candidate.id}}/{{jobId}}/{{candidate.email}}" class="btn red-color btn-sm">
+                                Reviews</a>
+                            </li>
+                        </ul>
+                        <a href="#/Review/Post/{{jobId}}/{{candidate.id}}" class="btn btn-primary btn-block btn-lg btn-square">
+                            Write Review</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="IsCandidateFound">
+        No candidate has been interested yet
+    </div>
+</div>

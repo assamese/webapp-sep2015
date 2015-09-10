@@ -1,0 +1,304 @@
+body
+{
+    font-family: 'Roboto' , sans-serif;
+    overflow-x: hidden;
+}
+
+
+
+.conversation-wrap
+{
+    border: 1px solid #ddd;
+    padding: 0;
+    max-height: 606px;
+    overflow: auto;
+}
+.conversation
+{
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+    margin: 0;
+}
+
+.message-wrap
+{
+    box-shadow: 0 0 3px #ddd;
+    padding: 0;
+}
+.msg-left
+{
+    padding: 5px; /*border-bottom:1px solid #ddd;*/
+    margin: 0;
+}
+msg-right
+{
+    padding: 5px; /*border-bottom:1px solid #ddd;*/
+    margin: 0;
+}
+.msg-wrap
+{
+    padding: 10px;
+    max-height: 400px;
+    overflow: auto;
+}
+
+.time
+{
+    color: #333333;
+    font-size: 11px;
+    font-weight: 400;
+    margin-right: 12px;
+}
+
+.user-id
+{
+    color: #333333;
+    font-size: 12px;
+    font-weight: 500;
+    margin-left: 12px;
+}
+.massage
+{
+    width: 655px;
+    margin-left: 20px;
+}
+.send-wrap
+{
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    padding: 10px; /*background: #f8f8f8;*/
+}
+
+.send-message
+{
+    resize: none;
+}
+
+.highlight
+{
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+}
+
+.send-message-btn
+{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.btn-panel
+{
+    background: #f7f7f9;
+}
+
+.btn-panel .btn
+{
+    color: #b8b8b8;
+    transition: 0.2s all ease-in-out;
+}
+
+.btn-panel .btn:hover
+{
+    color: #666;
+    background: #f8f8f8;
+}
+.btn-panel .btn:active
+{
+    background: #f8f8f8;
+    box-shadow: 0 0 1px #ddd;
+}
+
+.btn-panel-conversation .btn, .btn-panel-msg .btn
+{
+    background: #f8f8f8;
+}
+.btn-panel-conversation .btn:first-child
+{
+    border-right: 1px solid #ddd;
+}
+
+.msg-wrap .media-heading
+{
+    color: #003bb3;
+    font-weight: 700;
+}
+
+
+.msg-date
+{
+    background: none;
+    text-align: center;
+    color: #aaa;
+    border: none;
+    box-shadow: none;
+    border-bottom: 1px solid #ddd;
+}
+
+.wrapper
+{
+}
+.user-item
+{
+    margin-top: 3px;
+}
+.chat-box-head
+{
+    background-color: #E95748;
+    color: #ffffff;
+    padding: 10px 15px;
+    text-align: center;
+}
+.chat-box-head span
+{
+    font-family: "Roboto" ,sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    position: relative;
+    top: 3px;
+}
+.chat-box-head img
+{
+    height: 32px;
+    width: 32px;
+}
+
+
+
+/*********************************css-for-chat-box**********************************/
+
+
+/*****for-left******/
+
+
+.chat-box-left
+{
+    position: relative;
+    background: #E2E2E2;
+    border: 1px solid #9f9f9f;
+    margin-left: 25px;
+    margin-right: 25px;
+    border-radius: 5px;
+}
+.chat-box-left:after, .chat-box-left:before
+{
+    right: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+
+.chat-box-left::before
+{
+    border-color: rgb(226, 226, 226);
+    border-width: 6px;
+    left: -6px;
+    margin-top: -13px;
+    top: 26px;
+    transform: rotate(40deg);
+}
+
+/*****end-left******/
+
+
+/*****for-right******/
+
+
+.chat-box-right
+{
+    position: relative;
+    background: #E2E2E2;
+    border: 1px solid #9f9f9f;
+    margin-left: 25px;
+    margin-right: 25px;
+    border-radius: 5px;
+}
+.chat-box-right:after, .chat-box-right:before
+{
+    left: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.chat-box-right:after
+{
+    border-color: rgba(136, 183, 213, 0);
+    border-left-color: #E2E2E2;
+    border-width: 8px;
+    margin-top: -20px;
+}
+
+
+
+
+/*****end-left******/
+
+
+
+
+
+
+
+
+
+
+/*********************************css-for-chat-box**********************************/
+
+
+
+
+
+.chat-box-left-right::after
+{
+    border: 5px solid #E2E2E2;
+    content: " ";
+    left: 671px;
+    position: absolute;
+    top: 15%;
+    transform: rotate(50deg);
+}
+
+.chat-box-left-right
+{
+    border: 1px solid #c5c5c5;
+    border-radius: 5px;
+    font-size: 12px;
+    height: auto;
+    margin-left: 15px;
+    padding: 15px;
+    position: relative;
+    width: 85%;
+    background: #E2E2E2;
+}
+
+
+
+
+.user-name
+{
+    margin: 2px 0 5px;
+}
+.btn-color
+{
+    margin-top: 8px;
+    margin-bottom: 8px;
+    background: #E84F40;
+    color: #ffffff;
+}
+.footer-area
+{
+    background: none;
+}
+
+
+
