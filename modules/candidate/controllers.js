@@ -3,10 +3,10 @@
     angular.module('um_CandidateController', ['um_CandidateService', 'um_JobService', 'um_StatusService', 'um_SessionService', 'um_UserService', 'um_RegisterService', 'um_EngagementService', 'um_GoogleMapService', 'um_SettingService', 'um_InviteService', 'um_UploaderService', 'um_UtilService'])
     .controller("candidateController", function ($scope, $route, $timeout, $interval, $routeParams, CandidateService, JobService, StatusService, SessionService, UserService, RegisterService, EngagementService, GoogleMapService, SettingService, InviteService, UploaderService, UtilService, $modal, $http, $q) {
 
-
-        $scope.PopulateData = function () {
-            $scope.SetBreadCrumbForUploadViaSpreadsheet("Upload Via Spreadsheet");
+        $scope.PopulateBreadCrumbForSpreadsheet = function () {
+            $scope.SetBreadCrumb("Upload Via Spreadsheet");
         }
+        
 
         $scope.ImportUserData = function (files) {
 
@@ -77,17 +77,7 @@
 
             return deferred.promise;
         }
-
-
-
-
-
-
-
-
-
-
-
+        
         $scope.GetInterestedCandidates = function () {
 
             $scope.SetBreadCrumb("Candidate Review");
