@@ -492,6 +492,14 @@ md-tabs[md-border-bottom] md-tabs-wrapper{
 	text-decoration: underline;
 	padding-left: 4px;
 }
+.canidate-all-top-tagline-innerdiv-left span:nth-child(3) a{
+	font-size: 12px;
+	font-family: 'proximaNovaSemibold';
+	text-transform: uppercase;
+	color: #e84c3d;
+	text-decoration: underline;
+	padding-left: 4px;
+}
 .canidate-all-top-tagline-innerdiv-right span{
 	text-transform: uppercase;
 	font-size: 11.5px;
