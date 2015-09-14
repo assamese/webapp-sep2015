@@ -52,7 +52,7 @@
             <div class="col-lg-8 col-md-8 col-sm-8 survey-tabs-body-right">
                 <div ng-repeat="survey1 in availableSurveys">
                     <label>
-                        <input type="radio" ng-change="updateNameofSurveyOnReviewTab(survey1.NameOfSurvey)" name="url" value="{{survey1.Filename+'//*--*//'+$index}}" ng-model="survey.filename" />&nbsp;{{survey1.NameOfSurvey}}
+                        <input type="radio" ng-change="updateNameofSurveyOnReviewTab(survey1.NameOfSurvey)" name="url" value="{{survey1.Filename+'//*--*//'+$index}}" ng-model="survey.filename" />&nbsp;{{survey1.NameOfSurvey}}>&nbsp;<a href="{{survey1.ResultURL}}" target="_blank">Show Result</a>
                     </label>
                 </div>                     
 
