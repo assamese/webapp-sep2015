@@ -784,6 +784,22 @@ md-tabs[md-border-bottom] md-tabs-wrapper{
 }
 /*track candidate screen ends*/
 
+/* candidate profile */
+.btn-nav{
+	padding:0; 
+}
+.btn-nav > li{
+	list-style: none;
+	margin: 10px 0;
+}
+/* candidate profile ends */
+
+/* some globals*/
+.padd-0{
+	padding: 0;
+}
+/* some globals ends*/
+
 /*footer*/
 footer{
 	background-color:#c5c5c5;

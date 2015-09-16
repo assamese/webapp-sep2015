@@ -102,7 +102,7 @@
                       templateUrl: 'modules/review/writeReview.html',
                       controller: 'reviewController'
                   })
-                  .when('/Review/List/:candidateId/:jobId/:candidateEmail', {
+                  .when('/Review/List/:candidateId/:candidateEmail', {
                       templateUrl: 'modules/review/recentReviews.html',
                       controller: 'reviewController'
                   })

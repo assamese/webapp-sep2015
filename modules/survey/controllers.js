@@ -24,13 +24,19 @@ $(document).ready(function () {
                 sendToWho: 'h'
             };
 
-            JobService.GetJobFromTaskNewByTaskId($routeParams.jobId).then(function(response){
-                CandidateService.GetCandidates(response.id, StatusService.JobSeekerInterested).then(function (data) {
-                 
-                    $scope.interestedCandidatesForCurrentJob = data;
-                    CandidateService.GetCandidates(response.id, StatusService.JobSeekerAccepted).then(function (data) {
-                        $scope.hiredCandidatesForCurrentJob = data;
-                        $scope.isCandidatesLoadingForCurrentJob =false;
+            /*first get statuses then do processing*/
+            StatusService.GetStatuses().then(function(response){
+
+                StatusService2 = response;
+
+                JobService.GetJobFromTaskNewByTaskId($routeParams.jobId).then(function(response){
+                    CandidateService.GetCandidates(response.id, StatusService2.JobSeekerInterested).then(function (data) {
+                     
+                        $scope.interestedCandidatesForCurrentJob = data;
+                        CandidateService.GetCandidates(response.id, StatusService2.JobSeekerAccepted).then(function (data) {
+                            $scope.hiredCandidatesForCurrentJob = data;
+                            $scope.isCandidatesLoadingForCurrentJob =false;
+                        });
                     });
                 });
             });

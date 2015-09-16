@@ -21,19 +21,25 @@
         }
 
         $scope.OfferSend = function (candidate, jobId) {
+            /*first get statuses then do processing*/
+            StatusService.GetStatuses().then(function(response){
 
-            if (angular.isObject(candidate) && angular.isDefined(jobId)) {
-                var model = {
-                    posterId: SessionService.User.email,
-                    seekerId: candidate.email,
-                    taskId: jobId,
-                    status: StatusService.JobSeekerAccepted
-                };
+                StatusService2 = response;
+                if (angular.isObject(candidate) && angular.isDefined(jobId)) {
+               
+                    var model = {
+                        posterId: SessionService.User.email,
+                        seekerId: candidate.email,
+                        taskId: jobId,
+                        status: StatusService2.JobSeekerAccepted
+                    };
 
-                EngagementService.Insert(model).then(function (response) {
-                    $location.path("HireFinalNotification/" + candidate.name);
-                });
-            }
+                    EngagementService.Insert(model).then(function (response) {
+               
+                        $location.path("HireFinalNotification/" + candidate.name);
+                    });
+                }
+            });
         }
     });
 }); 

@@ -51,7 +51,7 @@
                 CandidateService.GetCandidateProfile($routeParams.candidateId).then(function (response) {
                     if (angular.isObject(response)) {
                         $scope.candidate = response;
-                        $scope.jobId = $routeParams.jobId;
+                        /*$scope.jobId = $routeParams.jobId;*/
                     }
                 });
             });

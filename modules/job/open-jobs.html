@@ -36,7 +36,7 @@
                 <li>
                     <a href="#/Candidate/All/Mark-Hired/{{currentJob.taskId}}">
                     <i class="fa fa-check-square-o"></i>
-                        Mark As Hired
+                        Assign To Job
                     </a>
                 </li>                
                 <li>
@@ -70,6 +70,13 @@
                 <div class="open-jobs-right-bottom-left-photostream">
                     <h1>Photo Stream</h1>
                     <p>The following images were uploaded for this job.</p>
+                    <form id="fileupload" style="display:none" name="fileupload" class="pull-left" enctype="multipart/form-data" method="post">
+                    <input type="file" id="photo-uploader" name="file" onchange="angular.element(this).scope().uploadJobPhoto(this.files)"/>
+                    </form>
+                    <a href="javascript:void(0)" onclick="tiggerUploader()" class="list-style-icon padd-0">
+                        <i class="fa fa-picture-o"></i> Upload Photo
+                    </a>
+
                     <md-content class="open-jobs-right-bottom-right-candidatelists">
                         <md-tabs md-dynamic-height md-border-bottom>
                           <md-tab label="Uploaded By Staff" class="open-jobs-right-bottom-right-tabhead">
@@ -84,7 +91,8 @@
                                         <p class="text-center">
                                             {{photo.caption   | limitTo : 10}}..<br/>
                                             {{photo.createdAt| date:'MMM dd , yyyy'}}<br/>
-                                            <a ng-show="photo.geoCode" href="http://www.google.com/maps/place/{{photo.geoCode.latitude}},{{photo.geoCode.longitude}}"
+                                            
+                                            <a ng-show="photo.geoCode" ng-hide="!photo.geoCode || photo.geoCode.latitude==0 || photo.geoCode.longitude==0" href="http://www.google.com/maps/place/{{photo.geoCode.latitude}},{{photo.geoCode.longitude}}"
                                             target="_blank">Location</a>
                                         </p>
                                     </li>
@@ -105,8 +113,9 @@
                                     <p class="text-center">
                                         {{photo.caption  | limitTo : 10}}..<br/>
                                         {{photo.createdAt| date:'MMM dd , yyyy'}}<br/>
-                                        <a ng-show="photo.geoCode" href="http://www.google.com/maps/place/{{photo.geoCode.latitude}},{{photo.geoCode.longitude}}"
-                                        target="_blank">Location</a>
+                                        <a ng-show="photo.geoCode" ng-hide="!photo.geoCode || photo.geoCode.latitude==0 || photo.geoCode.longitude==0" href="http://www.google.com/maps/place/{{photo.geoCode.latitude}},{{photo.geoCode.longitude}}"
+                                            target="_blank">Location</a>
+
                                     </p>
                                     
                                 </li>
