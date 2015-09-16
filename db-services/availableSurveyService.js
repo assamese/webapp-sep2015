@@ -33,7 +33,8 @@ angular.module("db_AvailableSurveyService", ['parse']).factory("dbAvailableSurve
                     surveys.push({
                         NameOfSurvey: response.get("nameOfSurvey"),
                         Filename: response.get("filename"),
-                        PosterFacebookId: response.get("posterFacebookId")
+                        PosterFacebookId: response.get("posterFacebookId"),
+                        ResultURL: response.get("resultURL")
                     });
                 }
             }
