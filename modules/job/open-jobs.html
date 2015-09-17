@@ -91,7 +91,7 @@
                                         <p class="text-center">
                                             {{photo.caption   | limitTo : 10}}..<br/>
                                             {{photo.createdAt| date:'MMM dd , yyyy'}}<br/>
-                                            
+                                            By: {{photo.ownerName}}<br/>
                                             <a ng-show="photo.geoCode" ng-hide="!photo.geoCode || photo.geoCode.latitude==0 || photo.geoCode.longitude==0" href="http://www.google.com/maps/place/{{photo.geoCode.latitude}},{{photo.geoCode.longitude}}"
                                             target="_blank">Location</a>
                                         </p>

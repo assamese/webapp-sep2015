@@ -1,11 +1,12 @@
 $(document).ready(function () {
 
-    angular.module('um_JobController', ['um_JobService', 'um_SessionService','um_CandidateService','um_StatusService',  'um_UploaderService']).controller("jobController", 
-        function ($scope, $location, $routeParams, JobService, SessionService, CandidateService, StatusService, UploaderService) {
+    angular.module('um_JobController', ['um_JobService', 'um_SessionService','um_CandidateService','um_StatusService',  'um_UploaderService', 'um_UserService']).controller("jobController", 
+        function ($scope, $location, $routeParams, JobService, SessionService, CandidateService, StatusService, UploaderService, UserService) {
 
         $scope.SetJobInfoBreadcrumb = function () {
             $scope.SetBreadCrumb("Job Information");
         }
+
 
         $scope.PopulateData = function () {
 
@@ -77,8 +78,13 @@ $(document).ready(function () {
                             $location.path("Job/SavedNotification/" + response.id);
                     }
                     else {
-
+                        if(response.indexOf('Invalid date:')>-1){
+ 
+                            $scope.ShowMessage("Please enter date.");
+                        } else{
+                            
                         $scope.ShowMessage(response);
+                        }
                     }
                 });
             }
@@ -128,7 +134,7 @@ $(document).ready(function () {
         }
         /*to upload job related photos*/
         $scope.uploadJobPhoto = function(files){
-            console.log(files[0]);
+
             UploaderService.Uploader(files, function (response) {
 
                 if (angular.isObject(response)) {
@@ -170,6 +176,19 @@ $(document).ready(function () {
             
             JobService.GetPhotoStreamByJobId($scope.currentJob.taskId,fb_emails_list).then(function(response){
 
+                UserService.GetUsersByFbId(fb_emails_list).then(function(candidates){
+                    
+                    angular.forEach(candidates,  function(candidate){
+                        
+                        angular.forEach(response, function(photo){
+
+                            if(candidate.facebookId == photo.facebookId){
+
+                                photo.ownerName = candidate.name;
+                            }
+                        });
+                    });
+                });
                 $scope.isFetchingPhotostream = false;
                 $scope.photostream = response;
             });

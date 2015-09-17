@@ -26,7 +26,7 @@
                         <li><a ng-href="{{candidate.resume}}" class="btn btn-block btn-danger btn-sm" target="{{candidate.isResumeAttached?'_blank':'_self'}}">
                             Resume</a> </li>
                         <li><a href="#/Chat" class="btn btn-block btn-danger btn-sm">Chat</a></li>
-                        <li><a href="#/Review/List/{{candidate.id}}/{{candidate.email}}" class="btn btn-block btn-danger btn-sm">Review</a></li>
+                        <li><a href="#/Review/List/{{candidate.id}}/{{candidate.email}}" class="btn btn-block btn-danger btn-sm">Show Review</a></li>
                         <li ng-show="jobId"><a href="#/Hire/{{jobId}}/{{candidate.id}}" class="btn btn-block btn-danger btn-sm">Hire</a></li>
                     </ul>
                     <a ng-show="jobId" href="#/Review/Post/{{jobId}}/{{candidate.id}}" class="btn btn-primary btn-block btn-lg btn-square">

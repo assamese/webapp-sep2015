@@ -366,7 +366,8 @@ ol li:before {
 .photostream-ul li{
 	list-style: none;
 	float: left;
-	height: 175px;
+	height: 180px;
+  	overflow: hidden;
 }
 .photostream-ul li a img{
 	height: 90px;
