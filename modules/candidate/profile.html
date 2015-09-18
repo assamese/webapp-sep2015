@@ -1,4 +1,6 @@
-﻿<div class="row" ng-controller="candidateController" ng-init="PopulateCandidateInfo()">
+﻿<section class="container">
+    
+<div class="row" ng-controller="candidateController" ng-init="PopulateCandidateInfo()">
 
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
         <div class="row">
@@ -21,10 +23,11 @@
                     </div>
                     <!-- /.the-box .no-border .bg-info .no-margin -->
                     <ul class="btn-nav">
-                        <li><a ng-href="{{candidate.resume}}" class="btn red-color btn-sm" target="{{candidate.isResumeAttached?'_blank':'_self'}}">
+                        <li><a ng-href="{{candidate.resume}}" class="btn btn-block btn-danger btn-sm" target="{{candidate.isResumeAttached?'_blank':'_self'}}">
                             Resume</a> </li>
-                        <li><a href="#/Chat" class="btn red-color btn-sm">Chat</a></li>
-                        <li ng-show="jobId"><a href="#/Hire/{{jobId}}/{{candidate.id}}" class="btn red-color btn-sm">Hire</a></li>
+                        <li><a href="#/Chat" class="btn btn-block btn-danger btn-sm">Chat</a></li>
+                        <li><a href="#/Review/List/{{candidate.id}}/{{candidate.email}}" class="btn btn-block btn-danger btn-sm">Show Review</a></li>
+                        <li ng-show="jobId"><a href="#/Hire/{{jobId}}/{{candidate.id}}" class="btn btn-block btn-danger btn-sm">Hire</a></li>
                     </ul>
                     <a ng-show="jobId" href="#/Review/Post/{{jobId}}/{{candidate.id}}" class="btn btn-primary btn-block btn-lg btn-square">
                         <i class="fa fa-pencil"></i>Write Review</a>
@@ -198,3 +201,4 @@
     </div>
     <!-- /.col-lg-8 -->
 </div>
+</section>

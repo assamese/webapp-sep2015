@@ -1,10 +1,12 @@
 $(document).ready(function () {
 
-    angular.module('um_JobController', ['um_JobService', 'um_SessionService','um_CandidateService','um_StatusService']).controller("jobController", function ($scope, $location, $routeParams, JobService, SessionService, CandidateService, StatusService) {
+    angular.module('um_JobController', ['um_JobService', 'um_SessionService','um_CandidateService','um_StatusService',  'um_UploaderService', 'um_UserService']).controller("jobController", 
+        function ($scope, $location, $routeParams, JobService, SessionService, CandidateService, StatusService, UploaderService, UserService) {
 
         $scope.SetJobInfoBreadcrumb = function () {
             $scope.SetBreadCrumb("Job Information");
         }
+
 
         $scope.PopulateData = function () {
 
@@ -76,33 +78,93 @@ $(document).ready(function () {
                             $location.path("Job/SavedNotification/" + response.id);
                     }
                     else {
-
+                        if(response.indexOf('Invalid date:')>-1){
+ 
+                            $scope.ShowMessage("Please enter date.");
+                        } else{
+                            
                         $scope.ShowMessage(response);
+                        }
                     }
                 });
             }
         }
 
         $scope.GetJobs = function () {
+            
+            /*first get statuses then do processing*/
+            StatusService.GetStatuses().then(function(response){
 
-            $scope.SetBreadCrumb("Open Jobs");
-            $scope.isJobsLoading = true;
-            $scope.jobs = [];
-            $scope.isFetchingPhotostream = true;
-            $scope.photostream = [];
-            $scope.interestedCandidatesForCurrentJob = [];
-            $scope.hiredCandidatesForCurrentJob = [];
-            $scope.sessionUser =  SessionService.User;
-            JobService.GetOpenJobs(SessionService.User.id).then(function (jobs) {
-                $scope.isJobsLoading = false;
-                if(jobs.length){
-                    $scope.jobs = jobs;
-                    $scope.currentJob = jobs[0];
-                }
+                StatusService2 = response;
+
+                $scope.SetBreadCrumb("Open Jobs");
+                $scope.isJobsLoading = true;
+                $scope.jobs = [];
+                $scope.isFetchingPhotostream = true;
+                $scope.photostream = [];
+                $scope.interestedCandidatesForCurrentJob = [];
+                $scope.hiredCandidatesForCurrentJob = [];
+                $scope.sessionUser =  SessionService.User;
+                JobService.GetOpenJobs(SessionService.User.id).then(function (jobs) {
+                    $scope.isJobsLoading = false;
+                    if(jobs.length){
+                        $scope.jobs = jobs;
+                        $scope.currentJob = jobs[0];
+                    }
+                });
+
+                $scope.$watch("currentJob",function(newVal,oldVal){
+
+                    if(angular.isObject($scope.currentJob)){
+                        $scope.isCandidatesLoadingForCurrentJob =true;
+                        $scope.isFetchingPhotostream = true;
+                        CandidateService.GetCandidates($scope.currentJob.id, StatusService2.JobSeekerInterested).then(function (data) {
+                                $scope.interestedCandidatesForCurrentJob = data;
+                            CandidateService.GetCandidates($scope.currentJob.id, StatusService2.JobSeekerAccepted).then(function (data) {
+                                $scope.hiredCandidatesForCurrentJob = data;
+                                $scope.isCandidatesLoadingForCurrentJob =false;
+                                /*fetch photostream when hired candidates are avialable*/
+                                $scope.fetchPhotoStream();
+                            });
+                        });
+                    }
+                });
+
             });
-
         }
-        
+        /*to upload job related photos*/
+        $scope.uploadJobPhoto = function(files){
+
+            UploaderService.Uploader(files, function (response) {
+
+                if (angular.isObject(response)) {
+                    var file = files[0];
+
+                    var model = {
+                        caption: file.name,
+                        imageObj: response,
+                        imageUrl: response.url,
+                        tags: $scope.currentJob.taskId,
+                        facebookId: SessionService.User.facebookId,
+                    };
+
+                    JobService.UploadPicture(model).then(function (data) {
+                        if (angular.isObject(data)) {
+
+                            $scope.ShowMessage("Picture has been uploaded");
+                            $scope.fetchPhotoStream();
+                        }
+                        else {
+                            $scope.ShowMessage(data);
+                        }
+                    });
+                }
+            }, function (data) {
+                var obj = jQuery.parseJSON(data);
+                $scope.ShowMessage(obj.error);
+            });
+        }   
+
         $scope.fetchPhotoStream = function(){
             /* step 1 to get list of hired candidate emails + user's own */
             var fb_emails_list = [SessionService.User.facebookId];
@@ -114,27 +176,23 @@ $(document).ready(function () {
             
             JobService.GetPhotoStreamByJobId($scope.currentJob.taskId,fb_emails_list).then(function(response){
 
+                UserService.GetUsersByFbId(fb_emails_list).then(function(candidates){
+                    
+                    angular.forEach(candidates,  function(candidate){
+                        
+                        angular.forEach(response, function(photo){
+
+                            if(candidate.facebookId == photo.facebookId){
+
+                                photo.ownerName = candidate.name;
+                            }
+                        });
+                    });
+                });
                 $scope.isFetchingPhotostream = false;
                 $scope.photostream = response;
             });
         }
-
-        $scope.$watch("currentJob",function(newVal,oldVal){
-            if(angular.isObject($scope.currentJob)){
-                $scope.isCandidatesLoadingForCurrentJob =true;
-                $scope.isFetchingPhotostream = true;
-                
-                CandidateService.GetCandidates($scope.currentJob.id, StatusService.JobSeekerInterested).then(function (data) {
-                        $scope.interestedCandidatesForCurrentJob = data;
-                    CandidateService.GetCandidates($scope.currentJob.id, StatusService.JobSeekerAccepted).then(function (data) {
-                        $scope.hiredCandidatesForCurrentJob = data;
-                        $scope.isCandidatesLoadingForCurrentJob =false;
-                        /*fetch photostream when hired candidates are avialable*/
-                        $scope.fetchPhotoStream();
-                    });
-                });
-            }
-        });
 
         $scope.resetCurrentJob = function(job){
             $scope.currentJob = job;

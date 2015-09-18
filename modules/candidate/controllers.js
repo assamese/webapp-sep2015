@@ -91,15 +91,20 @@
             }).then(function () {
 
                 $scope.IsCandidateFound = false;
+                    /*first get statuses then do processing*/
+                    StatusService.GetStatuses().then(function(response){
 
-                CandidateService.GetCandidates($scope.jobId, StatusService.JobSeekerInterested).then(function (data) {
-                    if (angular.isObject(data)) {
-                        $scope.candidates = data;
-                        $scope.IsCandidateFound = data.length == 0;
-                    }
-                    else {
-                        $scope.ShowMessage(data);
-                    }
+                    StatusService2 = response;
+
+                    CandidateService.GetCandidates($scope.jobId, StatusService2.JobSeekerInterested).then(function (data) {
+                        if (angular.isObject(data)) {
+                            $scope.candidates = data;
+                            $scope.IsCandidateFound = data.length == 0;
+                        }
+                        else {
+                            $scope.ShowMessage(data);
+                        }
+                    });
                 });
             });
         }
@@ -129,12 +134,18 @@
 
                 $scope.preSelectedHireInvite = "1";
             }
-            CandidateService.GetAllInterestedCandidates(posterEmail, StatusService.JobSeekerInterested).then(function (data) {
+            /*first get statuses then do processing*/
+            StatusService.GetStatuses().then(function(response){
 
-                $scope.isCandidatesLoading = false;
+                StatusService2 = response;
 
-                $scope.candidates = data;
-                $scope.filteredCandidates = data;
+                CandidateService.GetAllInterestedCandidates(posterEmail, StatusService2.JobSeekerInterested).then(function (data) {
+
+                    $scope.isCandidatesLoading = false;
+
+                    $scope.candidates = data;
+                    $scope.filteredCandidates = data;
+                });
             });
             /**/
             JobService.GetOpenJobs(SessionService.User.id).then(function (jobs) {
@@ -226,19 +237,24 @@
 
 
                     } else if ($scope.preSelectedHireInvite == "1") { //have to mark hired.
+                        /*first get statuses then do processing*/
+                        StatusService.GetStatuses().then(function(response){
 
-                        angular.forEach(markedCandidatesObjects, function (markedCandidateSingleObj) {
+                            StatusService2 = response;
 
-                            var model = {
-                                posterId: SessionService.User.email,
-                                seekerId: markedCandidateSingleObj.email,
-                                taskId: $scope.jobSelectedFromModal,
-                                status: StatusService.JobSeekerAccepted
-                            };
+                            angular.forEach(markedCandidatesObjects, function (markedCandidateSingleObj) {
 
-                            EngagementService.Insert(model).then(function (response) { });
+                                var model = {
+                                    posterId: SessionService.User.email,
+                                    seekerId: markedCandidateSingleObj.email,
+                                    taskId: $scope.jobSelectedFromModal,
+                                    status: StatusService2.JobSeekerAccepted
+                                };
+
+                                EngagementService.Insert(model).then(function (response) { });
+                            });
                         });
-                        $scope.reqProcessed = true;
+                            $scope.reqProcessed = true;
 
                     } else { //what could be done?
 
@@ -436,16 +452,21 @@
             $scope.SetBreadCrumb("Hired Candidates");
             $scope.IsCandidateFound = false;
             $scope.jobId = $routeParams.jobId;
+            /*first get statuses then do processing*/
+            StatusService.GetStatuses().then(function(response){
 
-            CandidateService.GetCandidates($routeParams.jobId, StatusService.JobSeekerHired).then(function (data) {
+                StatusService2 = response;
 
-                if (angular.isObject(data)) {
-                    $scope.candidates = data;
-                    $scope.IsCandidateFound = data.length == 0;
-                }
-                else {
-                    $scope.ShowMessage(data);
-                }
+                CandidateService.GetCandidates($routeParams.jobId, StatusService2.JobSeekerHired).then(function (data) {
+
+                    if (angular.isObject(data)) {
+                        $scope.candidates = data;
+                        $scope.IsCandidateFound = data.length == 0;
+                    }
+                    else {
+                        $scope.ShowMessage(data);
+                    }
+                });
             });
         }
 
@@ -628,22 +649,26 @@
 
             /* Step 1: to add  a new row  in engagement table that will ask seeker's permission tp get his position on map */
             CandidateService.GetCandidateProfile($scope.candidateId).then(function (data) {
+                /*first get statuses then do processing*/
+                StatusService.GetStatuses().then(function(response){
 
-                if (angular.isDefined(data.email)) {
+                    StatusService2 = response;
 
-                    var tmpObj = {};
-                    tmpObj.taskId = $routeParams.jobId;
-                    tmpObj.posterId = SessionService.User.email;
-                    tmpObj.seekerId = data.email;
-                    tmpObj.status = StatusService.JobPosterWantsToTrackJobSeeker;
+                    if (angular.isDefined(data.email)) {
 
-                    EngagementService.Insert(tmpObj).then(function (response) { });
+                        var tmpObj = {};
+                        tmpObj.taskId = $routeParams.jobId;
+                        tmpObj.posterId = SessionService.User.email;
+                        tmpObj.seekerId = data.email;
+                        tmpObj.status = StatusService2.JobPosterWantsToTrackJobSeeker;
 
-                } else {
+                        EngagementService.Insert(tmpObj).then(function (response) { });
 
-                    console.log('Error geting seeker info');
-                }
+                    } else {
 
+                        console.log('Error geting seeker info');
+                    }
+                });
             });
 
         }
@@ -763,24 +788,29 @@
                 CandidateService.GetCandidateProfile($scope.candidateId).then(function (data) {
 
                     if (angular.isDefined(data.email)) {
+                        /*first get statuses then do processing*/
+                        StatusService.GetStatuses().then(function(response){
 
-                        var tmpObj = {};
-                        tmpObj.taskId = $scope.taskId;
-                        tmpObj.posterId = SessionService.User.email;
-                        tmpObj.seekerId = data.email;
-                        tmpObj.status = StatusService.JobSeekerHired;
+                            StatusService2 = response;
 
-                        EngagementService.Insert(tmpObj).then(function (response) {
-                            $scope.areJobsLoading = false;
-                            if (response) {
+                            var tmpObj = {};
+                            tmpObj.taskId = $scope.taskId;
+                            tmpObj.posterId = SessionService.User.email;
+                            tmpObj.seekerId = data.email;
+                            tmpObj.status = StatusService2.JobSeekerHired;
 
-                                $scope.IsJobSavedSuccess = true;
-                            } else {
-                                $scope.jobsError = true;
-                                $scope.jobsErrorMsg = "Internal Error Please Try Again By Refreshing The Page";
+                            EngagementService.Insert(tmpObj).then(function (response) {
+                                $scope.areJobsLoading = false;
+                                if (response) {
 
-                                console.log('Internal Error Try Again Later');
-                            }
+                                    $scope.IsJobSavedSuccess = true;
+                                } else {
+                                    $scope.jobsError = true;
+                                    $scope.jobsErrorMsg = "Internal Error Please Try Again By Refreshing The Page";
+
+                                    console.log('Internal Error Try Again Later');
+                                }
+                            });
                         });
 
                     } else {

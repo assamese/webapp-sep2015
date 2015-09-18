@@ -8,6 +8,9 @@
 
             $scope.SetBreadCrumb("Review");
 
+            /*to be used in redirect to candidate profile*/
+            $scope.jobId        = $routeParams.jobId;
+            $scope.candidateId  = $routeParams.candidateId;
             UserService.Get($routeParams.candidateId).then(function (candidate) {
                 $scope.candidate = candidate;
                 revieweeId = candidate.email;
@@ -51,7 +54,7 @@
                 CandidateService.GetCandidateProfile($routeParams.candidateId).then(function (response) {
                     if (angular.isObject(response)) {
                         $scope.candidate = response;
-                        $scope.jobId = $routeParams.jobId;
+                        /*$scope.jobId = $routeParams.jobId;*/
                     }
                 });
             });

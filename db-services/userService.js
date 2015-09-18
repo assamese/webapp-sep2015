@@ -510,6 +510,31 @@ angular.module("db_UserService", ['parse', 'um_GoogleMapService', 'db_Engagement
         return deferred.promise;
     }
 
+    var getUsersByFbId = function(fbIds){
+
+        var deferred = $q.defer();
+        var candidates = [];
+
+        var param = [{ key: "facebookId", value: fbIds, constraint: "containedIn"}];
+
+        ParseService.GetAll("User", param).then(function (users) {
+
+            if (users.length > 0) {
+
+                for (var index = 0; index <= users.length - 1; index++) {
+
+                    candidates.push(FillUserObject(users[index]));
+                }
+            }
+
+            deferred.resolve(candidates);
+        }, function (error) {
+
+            deferred.resolve(error.message);
+        });        
+
+        return deferred.promise;
+    }
     return {
         Get: get,
         GetAll: getAll,
@@ -520,6 +545,7 @@ angular.module("db_UserService", ['parse', 'um_GoogleMapService', 'db_Engagement
         Update: update,
         FilterByDriverLicense: filterByDriverLicense,
         GetAllInterestedUsers: getAllInterestedUsers,
-        UpdateUserByColumnName: updateUserByColumnName
+        UpdateUserByColumnName: updateUserByColumnName,
+        GetUsersByFbId: getUsersByFbId 
     }
 });

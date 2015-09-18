@@ -106,6 +106,17 @@ angular.module("um_UserService", ['db_UserService']).factory("UserService", func
 
         return deferred.promise;
     }
+    var getUsersByFbId = function(fbIds){
+
+        var deferred = $q.defer();
+
+        dbUserService.GetUsersByFbId(fbIds).then(function (response) {
+            
+            deferred.resolve(response);
+        });
+
+        return deferred.promise;
+    }
 
     return {
         Get: get,
@@ -116,6 +127,7 @@ angular.module("um_UserService", ['db_UserService']).factory("UserService", func
         GetByUsername: getByUsername,
         Update: update,
         FilterByDriverLicense: filterByDriverLicense,
-        UpdateUserByColumnName: updateUserByColumnName
+        UpdateUserByColumnName: updateUserByColumnName,
+        GetUsersByFbId: getUsersByFbId
     }
 });

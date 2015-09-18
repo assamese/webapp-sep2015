@@ -161,12 +161,16 @@ $(document).ready(function () {
             $scope.filterByMyCandidates = function() {
 
                 var posterEmail = SessionService.User.email;
+                /*first get statuses then do processing*/
+                StatusService.GetStatuses().then(function(response){
 
-                CandidateService.GetAllInterestedCandidates(posterEmail, StatusService.JobSeekerInterested).then(function (data) {
+                  StatusService2 = response;
 
-                    $scope.filteredCandidates = data;
-                });        
-           
+                  CandidateService.GetAllInterestedCandidates(posterEmail, StatusService2.JobSeekerInterested).then(function (data) {
+
+                      $scope.filteredCandidates = data;
+                  });        
+                });             
             }
            });
 });

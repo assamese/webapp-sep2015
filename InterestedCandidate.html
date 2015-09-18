@@ -33,14 +33,19 @@
 
         var mod = angular.module("esProntoApp1", ['um_EngagementService', 'um_StatusService', 'um_SettingService' ]).controller("Ctrl", function ($scope, EngagementService, StatusService) {
             $scope.Add = function () {
+                /*first get statuses then do processing*/
+                StatusService.GetStatuses().then(function(response){
 
-                EngagementService.Insert({
-                    posterId: $scope.posterId,
-                    seekerId: $scope.seekerId,
-                    taskId: $scope.jobId,
-                    status: StatusService.JobSeekerInterested
-                }).then(function (response) {
-                    alert("data is saved");
+                    StatusService2 = response;
+
+                    EngagementService.Insert({
+                        posterId: $scope.posterId,
+                        seekerId: $scope.seekerId,
+                        taskId: $scope.jobId,
+                        status: StatusService2.JobSeekerInterested
+                    }).then(function (response) {
+                        alert("data is saved");
+                    });
                 });
             }
         }).run(function (SettingService) {

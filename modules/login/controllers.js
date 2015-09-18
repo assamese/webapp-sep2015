@@ -9,9 +9,17 @@
 
                 AuthService.Authenticate(angular.lowercase($scope.email), $scope.password).then(function (response) {
                     if (angular.isObject(response)) {
- 
-                        if (response.get("emailVerified")) {
+
+                        if (response.get("emailVerified") && response.get('currentRegMode')=='P') {
+                        
                             window.location = "authenticated.htm#/company-profile";
+                        } 
+
+                        else if( response.get('currentRegMode')!='P' ){
+                            
+                            Parse.User.logOut();
+                            $scope.message = "Web-site login is available only for employers";
+                            $scope.IsButtonClick = false;
                         }
                         else {
                             $scope.message = "You need to verify the email address before logining into the system";

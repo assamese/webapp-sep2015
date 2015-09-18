@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
-    angular.module('um_SharedControllers', ['um_SessionService', 'db_UserService']).controller("headerController", function ($scope, $location, SessionService, dbUserService) {
-        
+    angular.module('um_SharedControllers', ['um_SessionService', 'db_UserService','um_StatusService']).controller("headerController", function ($scope, $location, SessionService, dbUserService, StatusService) {
+
     $scope.isActive = function (viewLocation) { 
         return viewLocation === $location.path();
     };

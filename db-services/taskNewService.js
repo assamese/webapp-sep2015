@@ -12,7 +12,10 @@ angular.module("db_TaskNewService", ['parse']).factory("dbTaskNewService", funct
         _user.id = userId;
 
         var param = [{ key: "poster", value: _user, constraint: "equalTo" },
-                    { key: "createdAt", order: "asc", constraint: "sortableType"}];
+                    { key: "createdAt", order: "asc", constraint: "sortableType"},
+                    { key: "isApproved", value: true, constraint: "equalTo"},
+                    { key: "expired", value: true, constraint: "notEqualTo"}
+                ];
 
         ParseService.GetAll("TaskNew", param).then(function (data) {
             if (data.length > 0) {

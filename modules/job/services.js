@@ -144,6 +144,24 @@ angular.module("um_JobService", ['parse', 'db_TaskService', 'db_TaskNewService',
         return deferred.promise;
     }
 
+    var uploadPicture = function (model) {
+
+        var deferred = $q.defer();
+
+        model.isTakenNow = false;
+
+        if (angular.isObject(model.imageObj)) {
+            model.image = { "name": model.imageObj.name, "url": model.imageObj.url, "__type": "File" };
+        }
+
+        model.location = new Parse.GeoPoint({ latitude: 0, longitude: 0 });
+
+        dbImageService.Save(model).then(function (response) {
+            deferred.resolve(response);
+        });
+
+        return deferred.promise;
+    }
     return {
         PostJob: postJob,
         GetOpenJobs: getOpenJobs,
@@ -151,6 +169,7 @@ angular.module("um_JobService", ['parse', 'db_TaskService', 'db_TaskNewService',
         GetJobFromTask: getJobFromTask,
         SendPush: sendPush,
         GetJobFromTaskNewByTaskId:getJobFromTaskNewByTaskId,
-        GetPhotoStreamByJobId: getPhotoStreamByJobId
+        GetPhotoStreamByJobId: getPhotoStreamByJobId,
+        UploadPicture: uploadPicture
     }
 });
