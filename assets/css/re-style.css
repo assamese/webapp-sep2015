@@ -462,7 +462,7 @@ md-tabs[md-border-bottom] md-tabs-wrapper{
 }
 */
 .open-jobs-right-bottom-right-candidatelists md-content{
-	padding-bottom: 40px !important;
+	padding-bottom: 80px !important;
 }
 .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle){
 	border-radius: 3.5px;
