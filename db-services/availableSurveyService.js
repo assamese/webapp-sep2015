@@ -34,7 +34,8 @@ angular.module("db_AvailableSurveyService", ['parse']).factory("dbAvailableSurve
                         NameOfSurvey: response.get("nameOfSurvey"),
                         Filename: response.get("filename"),
                         PosterFacebookId: response.get("posterFacebookId"),
-                        ResultURL: response.get("resultURL")
+                        ResultURL: response.get("resultURL"),
+                        ViewURL: response.get("viewURL")
                     });
                 }
             }
