@@ -1,7 +1,7 @@
-﻿$(document).ready(function () {
+$(document).ready(function () {
 
-    angular.module('um_CandidateController', ['um_CandidateService', 'um_JobService', 'um_StatusService', 'um_SessionService', 'um_UserService', 'um_RegisterService', 'um_EngagementService', 'um_GoogleMapService', 'um_SettingService', 'um_InviteService', 'um_UploaderService', 'um_UtilService'])
-    .controller("candidateController", function ($scope, $route, $timeout, $interval, $routeParams, CandidateService, JobService, StatusService, SessionService, UserService, RegisterService, EngagementService, GoogleMapService, SettingService, InviteService, UploaderService, UtilService, $modal, $http, $q) {
+    angular.module('um_CandidateController', ['um_CandidateService', 'um_JobService', 'um_StatusService', 'um_SessionService', 'um_UserService', 'um_RegisterService', 'um_EngagementService', 'um_GoogleMapService', 'um_SettingService', 'um_InviteService', 'um_UploaderService', 'um_UtilService', 'um_BaAttributesService'])
+    .controller("candidateController", function ($rootScope, $scope, $route, $timeout, $interval, $routeParams, CandidateService, JobService, StatusService, SessionService, UserService, RegisterService, EngagementService, GoogleMapService, SettingService, InviteService, UploaderService, UtilService, BaAttributesService, $modal, $http, $q) {
 
         $scope.PopulateBreadCrumbForSpreadsheet = function () {
             $scope.SetBreadCrumb("Upload Via Spreadsheet");
@@ -477,6 +477,10 @@
                 { value: 'Yes', text: 'Yes' },
                 { value: 'No', text: 'No' }
             ];
+            $scope.MfOptions = [
+                { value: 'M', text: 'M' },
+                { value: 'F', text: 'F' }
+            ];
 
             $scope.SetBreadCrumb("Profile");
 
@@ -485,21 +489,29 @@
             if (angular.isDefined($routeParams.id)) {
 
                 CandidateService.GetCandidateProfile($routeParams.id).then(function (data) {
+
                     if (angular.isObject(data)) {
+                            $scope.candidate = data;
+                        CandidateService.GetCandidateBaAttributes(data.facebookId).then(function (attrs) {
 
-                        $scope.candidate = data;
-                        $scope.jobId = $routeParams.jobId;
+                            data.tshirtSize                      = attrs.tshirtSize;
+                            data.ownDigitalCamera                = attrs.ownDigitalCamera;
+                            data.preferredShippingAddress        = attrs.preferredShippingAddress;
+                            data.garageOrStorageSpaceForPackages = attrs.garageOrStorageSpaceForPackages;
+                
+                            $scope.jobId = $routeParams.jobId;
 
-                        if (angular.isDefined(data.driversLicense)) {
+                            if (angular.isDefined(data.driversLicense)) {
 
-                            if (data.driversLicense == 1) {
+                                if (data.driversLicense == 1) {
 
-                                $scope.candidate.driversLicense = 'Yes';
-                            } else {
+                                    $scope.candidate.driversLicense = 'Yes';
+                                } else {
 
-                                $scope.candidate.driversLicense = 'No';
+                                    $scope.candidate.driversLicense = 'No';
+                                }
                             }
-                        }
+                        });    
                     }
                 }).then(function () {
                     CandidateService.GetCandidateGallery($scope.candidate.facebookId).then(function (data) {
@@ -823,6 +835,71 @@
                 });
 
             }
+        }
+
+        /**
+         * Function to be used when candidate is logged in 
+         *
+         */
+        $scope.PopulateEditCandidateProfileInfo = function(){
+            $scope.isLoadingInfo = true;
+            CandidateService.GetCandidateProfile(SessionService.User.id).then(function (data) {
+                
+                CandidateService.GetCandidateBaAttributes(data.facebookId).then(function (attrs) {
+
+                    data.tshirtSize                      = attrs.tshirtSize;
+                    data.ownDigitalCamera                = attrs.ownDigitalCamera;
+                    data.preferredShippingAddress        = attrs.preferredShippingAddress;
+                    data.garageOrStorageSpaceForPackages = attrs.garageOrStorageSpaceForPackages;
+                    
+                    $scope.user                          = data;
+                    $scope.isLoadingInfo                 = false;
+                });
+            });
+        }
+
+        /**
+         * to update candidates info after submitting
+         *
+         */
+        $scope.updateCandidateSelfInfo = function(){
+
+            var baData           = {};
+            $scope.isLoadingInfo = true;
+            CandidateService.UpdateCandidateOwnProfile($scope.user).then(function(response){
+                
+                if(response.status){
+
+                    BaAttributesService.GetIdByFbId($scope.user.facebookId).then(function(response){
+                            
+                        baData.facebookId                      = $scope.user.facebookId;
+                        baData.tshirtSize                      = $scope.user.tshirtSize;
+                        baData.ownDigitalCamera                = $scope.user.ownDigitalCamera;
+                        baData.preferredShippingAddress        = $scope.user.preferredShippingAddress;
+                        baData.garageOrStorageSpaceForPackages = $scope.user.garageOrStorageSpaceForPackages;
+                 
+                        if(response.id){
+
+                            baData.id = response.id;
+                        }
+                        BaAttributesService.Update(baData).then(function(stat){
+
+                            $scope.isLoadingInfo = false;
+                            if(angular.isObject(stat)){
+
+                                $scope.ShowMessage('Details updated successfully!');
+                            } else{
+                                
+                                $scope.ShowMessage('Something gone wrong, Please contact admin!!');
+                            }
+                        });
+                    });
+                } else {
+                  
+                    $scope.isLoadingInfo = false;
+                    $scope.ShowMessage("Internal error, Please contact admin!!");
+                }
+            });
         }
         /*End of all functions*/
     });

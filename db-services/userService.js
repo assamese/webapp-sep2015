@@ -133,8 +133,6 @@ angular.module("db_UserService", ['parse', 'um_GoogleMapService', 'db_Engagement
         return deferred.promise;
     }
 
-
-
     var getUsersByJobId = function (jobId, statusId) {
 
         var deferred = $q.defer();
@@ -278,6 +276,7 @@ angular.module("db_UserService", ['parse', 'um_GoogleMapService', 'db_Engagement
         return {
 
             id                  : obj.id,
+            sex                 : obj.get("sex"),
             name                : obj.get("name"),
             city                : angular.isDefined(city) ? obj.get("city").get("Name") : "",
             avtar               : angular.isObject(profilePicture) ? profilePicture.url : "http://tedxtalks.ted.com/decor/live/headshot.jpg",
@@ -285,7 +284,9 @@ angular.module("db_UserService", ['parse', 'um_GoogleMapService', 'db_Engagement
             about               : obj.get("about") ? obj.get("about") : '',
             links               : obj.get("links"),
             skills              : obj.get("skills"),
+            height              : obj.get("height"),
             resume              : angular.isObject(candidateResume) ? candidateResume.url : "javascript:alert('Candidate has not uploaded resume');",
+            address             : obj.get("address"),
             geoCode             : angular.isObject(geoCode) ? geoCode : "Unknown",
             username            : obj.get("username"),
             ownVehicle          : angular.isDefined(ownVehicle) ? ownVehicle == 1 ? "Yes" : "No" : "No",
@@ -535,6 +536,73 @@ angular.module("db_UserService", ['parse', 'um_GoogleMapService', 'db_Engagement
 
         return deferred.promise;
     }
+
+    /**
+     * to get users ba-attributes from the newly added table on 19-09
+     * to be able to users to login and edit their info.
+     * @param [String] [facebookId] [candidate facebook Id]
+     * @return [Object] [data] [attributes after fetching from the table]
+     * @dev: Baljeet
+     *
+     */
+    var getBaAttrByUserFbId = function(facebookId){
+
+        var data                             = {};
+        var deferred                         = $q.defer();
+
+        var param       = [{key:'facebookId',value:facebookId, constraint:'equalTo'}];
+        
+        ParseService.Get("BAattributes", param).then(function (attrs) {
+
+            if(angular.isDefined(attrs)){
+                
+                data.tshirtSize                      = attrs.get('tshirtSize') ? attrs.get('tshirtSize'):'';
+                data.ownDigitalCamera                = attrs.get('ownDigitalCamera') ? attrs.get('ownDigitalCamera') : '';
+                data.preferredShippingAddress        = attrs.get('preferredShippingAddress') ? attrs.get('preferredShippingAddress') :'';
+                data.garageOrStorageSpaceForPackages = attrs.get('garageOrStorageSpaceForPackages') ? attrs.get('garageOrStorageSpaceForPackages'):'';
+            } else{
+
+                data.tshirtSize                      = '';
+                data.ownDigitalCamera                = '';
+                data.preferredShippingAddress        = '';
+                data.garageOrStorageSpaceForPackages = '';
+            }
+            deferred.resolve(data);
+        }, function (error) {
+
+            deferred.resolve(error.message);
+        });
+
+        return deferred.promise;        
+    }
+    var updateUserOwnProfile = function (model) {
+
+        var deferred = $q.defer();
+        var user = new Parse.User();
+        user.set("id", model.id);
+        user.set("address", model.address);
+        user.set("phoneNumber", model.phoneNumber);
+        user.set("sex", model.sex);
+        user.set("links", model.links);
+        user.set("ownVehicle", model.ownVehicle);
+        user.set("vehicleType", model.vehicleType);
+        user.set("languagesKnown", model.languagesKnown);
+        user.set("skills", model.skills);
+        user.set("driversLicense", model.driversLicense);
+        user.set("height", model.height);
+
+        user.save(null, {
+            success: function (user) {
+                deferred.resolve({status:true});
+            },
+            error: function (user, error) {
+                deferred.resolve({status:false});
+            }
+        });
+
+        return deferred.promise;
+    }
+
     return {
         Get: get,
         GetAll: getAll,
@@ -546,6 +614,8 @@ angular.module("db_UserService", ['parse', 'um_GoogleMapService', 'db_Engagement
         FilterByDriverLicense: filterByDriverLicense,
         GetAllInterestedUsers: getAllInterestedUsers,
         UpdateUserByColumnName: updateUserByColumnName,
-        GetUsersByFbId: getUsersByFbId 
+        GetUsersByFbId: getUsersByFbId ,
+        GetBaAttrByUserFbId : getBaAttrByUserFbId,
+        UpdateUserOwnProfile : updateUserOwnProfile        
     }
 });

@@ -96,12 +96,33 @@ angular.module("um_CandidateService", ['db_UserService', 'db_ReviewService', 'db
         return deferred.promise;
     }
 
+    var getCandidateBaAttributes = function(facebookId){
+
+        var deferred = $q.defer();
+        dbUserService.GetBaAttrByUserFbId(facebookId).then(function (response) {
+            
+            deferred.resolve(response);
+        });        
+        return deferred.promise;
+    }
     
+    var updateCandidateOwnProfile = function(candidate){
+
+        var deferred = $q.defer();
+        dbUserService.UpdateUserOwnProfile(candidate).then(function (response) {
+            
+            deferred.resolve(response);
+        });        
+        return deferred.promise;
+    }
+
     return {
         GetCandidates               : getCandidates,
         GetCandidateProfile         : getCandidateProfile,
         GetCandidateGallery         : getCandidateGallery,
         GetAllInterestedCandidates  : getAllInterestedCandidates,
-        GetLocationHistory          : getLocationHistory
+        GetLocationHistory          : getLocationHistory,
+        GetCandidateBaAttributes    : getCandidateBaAttributes,
+        UpdateCandidateOwnProfile   : updateCandidateOwnProfile
     }
 });

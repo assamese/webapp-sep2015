@@ -14,7 +14,27 @@ angular.module("db_BaAttributeService", ['parse']).factory("dbBaAttributeService
         return deferred.promise;
     }
 
+    var getIdByFbId = function(facebookId){
+
+        var deferred = $q.defer();
+        
+        var param = [{key:'facebookId', value:facebookId, constraint:'equalTo'}];
+        
+        ParseService.Get('BAattributes',param).then(function(response){
+
+            if(angular.isObject(response)){
+
+                deferred.resolve({id:response.id});
+            } else{
+                
+                deferred.resolve({id:''});
+            }
+        });
+
+        return deferred.promise;
+    }
     return {
-        Save: save
+        Save: save,
+        GetIdByFbId : getIdByFbId
     }
 });

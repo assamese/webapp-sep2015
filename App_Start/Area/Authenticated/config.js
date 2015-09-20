@@ -31,6 +31,13 @@
         .primaryPalette('yellow')
         .dark();
     });
+    esProntoApp.run( function($location, $rootScope){
+
+      if($location.path()=='/Candidate/edit-profile'){
+
+        $rootScope.hidenav = true;
+      }
+    });
     esProntoApp.config(function ($compileProvider) {
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|javascript):/);
     });
@@ -157,7 +164,9 @@
                         templateUrl: 'modules/export-timesheet/index.html',
                         controller: 'exportTimesheetController'
                     })
-
+                    .when('/Candidate/edit-profile', {
+                       templateUrl: 'modules/candidate/edit-by-candidate.html',
+                    })
                  .otherwise({
                      template: '<h1>Sorry, Page is not exist. May be you are using wrong URL</h1>'
                  });

@@ -17,9 +17,11 @@
 
                         else if( response.get('currentRegMode')!='P' ){
                             
+                            /* updated on 19-09 in order to edit prfile in the webapp
                             Parse.User.logOut();
                             $scope.message = "Web-site login is available only for employers";
-                            $scope.IsButtonClick = false;
+                            $scope.IsButtonClick = false;*/
+                            window.location = "authenticated.htm#/Candidate/edit-profile";
                         }
                         else {
                             $scope.message = "You need to verify the email address before logining into the system";

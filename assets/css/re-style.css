@@ -793,6 +793,13 @@ md-tabs[md-border-bottom] md-tabs-wrapper{
 	list-style: none;
 	margin: 10px 0;
 }
+.editable-profile-ul{
+	padding: 0;
+}
+.editable-profile-ul li{
+	list-style: none;
+	margin-bottom: 5px;
+}
 /* candidate profile ends */
 
 /* some globals*/
@@ -800,6 +807,13 @@ md-tabs[md-border-bottom] md-tabs-wrapper{
 	padding: 0;
 }
 /* some globals ends*/
+
+/*to align fa icons on self candidate profile page*/
+.has-feedback .form-control-feedback{
+	top: 7px;
+}
+/*to align fa icons on self candidate profile page ends*/
+
 
 /*footer*/
 footer{

@@ -67,10 +67,10 @@
                                 <div class="media-body">
                                     <a href="#fakelink"></a>
                                     <p class="">
-                                    <ul class="nav-info">
+                                    <ul class="nav-info editable-profile-ul">
                                         <li>
 
-                                            <i class="fa fa-pencil-square"  ng-click="aboutForm.$show()" ng-hide="aboutForm.$visible">
+                                            <i class="btn btn-primary btn-sm fa fa-pencil"  ng-click="aboutForm.$show()" ng-hide="aboutForm.$visible">
                                             </i>
                                             <span editable-text="candidate.about" e-form="aboutForm" onbeforesave="updateUser('about', $data, candidate.email)">
                                             <strong>About:</strong> {{candidate.about}}
@@ -79,7 +79,7 @@
 
                                         <li>
 
-                                            <i class="fa fa-pencil-square"  ng-click="verifiedFacebookIDForm.$show()" ng-hide="verifiedFacebookIDForm.$visible">
+                                            <i class="btn btn-primary btn-sm fa fa-pencil"  ng-click="verifiedFacebookIDForm.$show()" ng-hide="verifiedFacebookIDForm.$visible">
                                             </i>
                                             <span editable-text="candidate.verifiedFacebookID" e-form="verifiedFacebookIDForm" onbeforesave="updateUser('verifiedFacebookID', $data, candidate.email)">
                                             <strong>Verified Facebook ID:</strong> 
@@ -108,15 +108,16 @@
                                 <div class="col-md-6">
                                     <div class="row">
                                         <div class="media-body">
-                                            <ul class="nav-info">
+                                            <ul class="nav-info editable-profile-ul">
                                                 <li>
-                                                <i class="fa fa-circle" style='color:#f00'>    
+                                                <i class="btn btn-danger btn-sm fa fa-ban">    
                                                 </i>
                                                 <strong>Email :</strong> {{candidate.email}} 
                                                 </li>
 
 <li>
-    <i class="fa fa-pencil-square"  ng-click="linksForm.$show()" ng-hide="linksForm.$visible" >
+    
+    <i class="btn btn-primary btn-sm fa fa-pencil"  ng-click="linksForm.$show()" ng-hide="linksForm.$visible" >
         
     </i>
     <span editable-text="candidate.links" e-form="linksForm" onbeforesave="updateUser('links', $data, candidate.email)">
@@ -125,41 +126,109 @@
 </li>
 
 <li>
-    <i class="fa fa-pencil-square" ng-click="ownVehicleForm.$show()" ng-hide="ownVehicleForm.$visible" ></i>
+    <i class="btn btn-primary btn-sm fa fa-pencil" ng-click="ownVehicleForm.$show()" ng-hide="ownVehicleForm.$visible" ></i>
     <span editable-radiolist="candidate.ownVehicle" e-ng-options="s.value as s.text for s in yesNoOptions" e-form="ownVehicleForm" onbeforesave="updateUser('ownVehicle', $data, candidate.email)">
         <strong>Own Vehicle :</strong> {{candidate.ownVehicle}} 
     </span>
 </li>
 <li>
-    <i class="fa fa-pencil-square" ng-click="vehicleTypeForm.$show()" ng-hide="vehicleTypeForm.$visible"></i>
+    <i class="btn btn-primary btn-sm fa fa-pencil" ng-click="vehicleTypeForm.$show()" ng-hide="vehicleTypeForm.$visible"></i>
     <span editable-text="candidate.vehicleType" e-form="vehicleTypeForm" onbeforesave="updateUser('vehicleType', $data, candidate.email)">
         <strong>Vehicle Type : </strong>{{candidate.vehicleType}}
     </span>
 </li>
 <li>
-    <i class="fa fa-pencil-square" ng-click="phoneNumberForm.$show()" ng-hide="phoneNumberForm.$visible"></i>
+    <i class="btn btn-primary btn-sm fa fa-pencil" ng-click="phoneNumberForm.$show()" ng-hide="phoneNumberForm.$visible"></i>
     <span editable-text="candidate.phoneNumber" e-form="phoneNumberForm" onbeforesave="updateUser('phoneNumber', $data, candidate.email)">
         <strong>Phone :</strong> {{candidate.phoneNumber}} 
     </span>
 </li>
 <li>
-    <i class="fa fa-pencil-square" ng-click="languagesKnownForm.$show()" ng-hide="languagesKnownForm.$visible"></i>
+    <i class="btn btn-primary btn-sm fa fa-pencil" ng-click="languagesKnownForm.$show()" ng-hide="languagesKnownForm.$visible"></i>
     <span editable-text="candidate.languagesKnown" e-form="languagesKnownForm" onbeforesave="updateUser('languagesKnown', $data, candidate.email)">
         <strong>Language Known :</strong> {{candidate.languagesKnown}}
     </span>
 </li>
 <li>
-    <i class="fa fa-pencil-square" ng-click="skillsForm.$show()" ng-hide="skillsForm.$visible"></i>
+    <i class="btn btn-primary btn-sm fa fa-pencil" ng-click="skillsForm.$show()" ng-hide="skillsForm.$visible"></i>
     <span editable-text="candidate.skills" e-form="skillsForm" onbeforesave="updateUser('skills', $data, candidate.email)">
         <strong>Skills :</strong> {{candidate.skills}} 
     </span>
 </li>
 <li>
-    <i class="fa fa-pencil-square" ng-click="driversLicenseForm.$show()" ng-hide="driversLicenseForm.$visible"></i>
+    <i class="btn btn-primary btn-sm fa fa-pencil" ng-click="driversLicenseForm.$show()" ng-hide="driversLicenseForm.$visible"></i>
     <span editable-radiolist="candidate.driversLicense" e-ng-options="s.value as s.text for s in yesNoOptions" e-form="driversLicenseForm" onbeforesave="updateUser('driversLicense', $data, candidate.email)">
         <strong>Drivers-License :</strong> {{candidate.driversLicense}} 
     </span>
 </li>
+<li>    
+    <i class="btn btn-primary btn-sm fa fa-pencil"  ng-click="addressForm.$show()" ng-hide="addressForm.$visible">  </i>
+    <span editable-text="candidate.address" e-form="addressForm" onbeforesave="updateUser('address', $data, candidate.email)">
+        <strong>Address :</strong> {{candidate.address}}
+    </span> 
+</li>
+<li>    
+    <i class="btn btn-primary btn-sm fa fa-pencil"  ng-click="heightForm.$show()" ng-hide="heightForm.$visible">  
+    </i>
+    <span editable-text="candidate.height" e-form="heightForm" onbeforesave="updateUser('height', $data, candidate.email)">
+        <strong>Height :</strong> {{candidate.height}}
+    </span> 
+</li>
+<li>
+    <i class="btn btn-primary btn-sm fa fa-pencil" ng-click="sexForm.$show()" ng-hide="sexForm.$visible"></i>
+    <span editable-radiolist="candidate.sex" e-ng-options="s.value as s.text for s in MfOptions" e-form="sexForm" onbeforesave="updateUser('sex', $data, candidate.email)">
+        <strong>Sex :</strong> {{candidate.sex}} 
+    </span>
+</li>
+
+
+                                            </ul>
+                                        </div>
+                                        <!-- /.media-body -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="the-box no-border property-list">
+                            <div class="panel-success">
+                                <div class="panel-heading ">
+                                    <h3 class="panel-title panel_space">
+                                        <i class="fa fa-user "></i> Additional Information</h3>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="media-body">
+                                            <ul class="nav-info editable-profile-ul">
+<li>    
+    <i class="btn btn-primary btn-sm fa fa-pencil"  ng-click="tshirtSizeForm.$show()" ng-hide="tshirtSizeForm.$visible">  
+    </i>
+    <span editable-text="candidate.tshirtSize" e-form="tshirtSizeForm" onbeforesave="updateUser('height', $data, candidate.email)">
+        <strong>Tshirt-Size :</strong> {{candidate.tshirtSize}}
+    </span> 
+</li>
+<li>    
+    <i class="btn btn-primary btn-sm fa fa-pencil"  ng-click="preferredShippingAddressForm.$show()" ng-hide="preferredShippingAddressForm.$visible">  
+    </i>
+    <span editable-text="candidate.preferredShippingAddress" e-form="preferredShippingAddressForm" onbeforesave="updateUser('preferredShippingAddress', $data, candidate.email)">
+        <strong>Shipping Address :</strong> {{candidate.preferredShippingAddress}}
+    </span> 
+</li>
+<li>    
+    <i class="btn btn-primary btn-sm fa fa-pencil"  ng-click="ownDigitalCameraForm.$show()" ng-hide="ownDigitalCameraForm.$visible">  
+    </i>
+    <span editable-text="candidate.ownDigitalCamera" e-form="ownDigitalCameraForm" onbeforesave="updateUser('ownDigitalCamera', $data, candidate.email)">
+        <strong>Own Digital Camera :</strong> {{candidate.ownDigitalCamera}}
+    </span> 
+</li>
+<li>
+    <i class="btn btn-primary btn-sm fa fa-pencil" ng-click="garageOrStorageSpaceForPackagesForm.$show()" ng-hide="garageOrStorageSpaceForPackagesForm.$visible" ></i>
+    <span editable-radiolist="candidate.garageOrStorageSpaceForPackages" e-ng-options="s.value as s.text for s in yesNoOptions" e-form="garageOrStorageSpaceForPackagesForm" onbeforesave="updateUser('garageOrStorageSpaceForPackages', $data, candidate.email)">
+        <strong>Garage/Storage Space For Packages :</strong> {{candidate.garageOrStorageSpaceForPackages}} 
+    </span>
+</li>
+
                                             </ul>
                                         </div>
                                         <!-- /.media-body -->
