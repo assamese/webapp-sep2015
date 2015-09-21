@@ -204,27 +204,27 @@
 <li>    
     <i class="btn btn-primary btn-sm fa fa-pencil"  ng-click="tshirtSizeForm.$show()" ng-hide="tshirtSizeForm.$visible">  
     </i>
-    <span editable-text="candidate.tshirtSize" e-form="tshirtSizeForm" onbeforesave="updateUser('height', $data, candidate.email)">
+    <span editable-text="candidate.tshirtSize" e-form="tshirtSizeForm" onbeforesave="updateUserAddtionalInfo('tshirtSize', $data)">
         <strong>Tshirt-Size :</strong> {{candidate.tshirtSize}}
     </span> 
 </li>
 <li>    
     <i class="btn btn-primary btn-sm fa fa-pencil"  ng-click="preferredShippingAddressForm.$show()" ng-hide="preferredShippingAddressForm.$visible">  
     </i>
-    <span editable-text="candidate.preferredShippingAddress" e-form="preferredShippingAddressForm" onbeforesave="updateUser('preferredShippingAddress', $data, candidate.email)">
+    <span editable-text="candidate.preferredShippingAddress" e-form="preferredShippingAddressForm" onbeforesave="updateUserAddtionalInfo('preferredShippingAddress', $data)">
         <strong>Shipping Address :</strong> {{candidate.preferredShippingAddress}}
     </span> 
 </li>
 <li>    
     <i class="btn btn-primary btn-sm fa fa-pencil"  ng-click="ownDigitalCameraForm.$show()" ng-hide="ownDigitalCameraForm.$visible">  
     </i>
-    <span editable-text="candidate.ownDigitalCamera" e-form="ownDigitalCameraForm" onbeforesave="updateUser('ownDigitalCamera', $data, candidate.email)">
+    <span editable-select="candidate.ownDigitalCamera" e-ng-options="s.value as s.text for s in ownDigitalCameraOptions" e-form="ownDigitalCameraForm" onbeforesave="updateUserAddtionalInfo('ownDigitalCamera', $data)">
         <strong>Own Digital Camera :</strong> {{candidate.ownDigitalCamera}}
     </span> 
 </li>
 <li>
     <i class="btn btn-primary btn-sm fa fa-pencil" ng-click="garageOrStorageSpaceForPackagesForm.$show()" ng-hide="garageOrStorageSpaceForPackagesForm.$visible" ></i>
-    <span editable-radiolist="candidate.garageOrStorageSpaceForPackages" e-ng-options="s.value as s.text for s in yesNoOptions" e-form="garageOrStorageSpaceForPackagesForm" onbeforesave="updateUser('garageOrStorageSpaceForPackages', $data, candidate.email)">
+    <span editable-radiolist="candidate.garageOrStorageSpaceForPackages" e-ng-options="s.value as s.text for s in yesNoOptions" e-form="garageOrStorageSpaceForPackagesForm" onbeforesave="updateUserAddtionalInfo('garageOrStorageSpaceForPackages', $data)">
         <strong>Garage/Storage Space For Packages :</strong> {{candidate.garageOrStorageSpaceForPackages}} 
     </span>
 </li>

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" ng-app="esProntoApp">
 <head>
     <title>esPronto</title>
@@ -181,13 +182,17 @@
         <div class="container-fluid">
             <!-- BEGIN PAGE CONTENT -->
             <div class="page-content">
-
-                <div class="panel-success" ng-show="message.length > 0">
-                    <div class="panel-heading panel-title panel_space">
-                        {{message}}
+                <div class="container">
+                    <div class="row">
+                        
+                    <div class="panel-success" ng-show="message.length > 0">
+                        <div class="panel-heading panel-title panel_space">
+                            {{message}}
+                        </div>
+                    </div>
+                    <br ng-show="message.length > 0" />
                     </div>
                 </div>
-                <br ng-show="message.length > 0" />
                 <!--   MAIN CONTENT AND INJECTED VIEWS  -->
                 <div ng-view>
                 </div>

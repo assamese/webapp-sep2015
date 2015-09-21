@@ -481,6 +481,11 @@ $(document).ready(function () {
                 { value: 'M', text: 'M' },
                 { value: 'F', text: 'F' }
             ];
+             $scope.ownDigitalCameraOptions = [
+                {value: 'No', text: 'No'},
+                {value: 'High-res-camera', text: 'High-res-camera'},
+                {value: 'Smart-phone-camera', text: 'Smart-phone-camera'}
+            ]; 
 
             $scope.SetBreadCrumb("Profile");
 
@@ -539,9 +544,38 @@ $(document).ready(function () {
         $scope.updateUser = function (columnName, value, userEmail) {
 
             UserService.UpdateUserByColumnName(columnName, value, userEmail).then(function (response) {
+                
                 /*Column updated success*/
+                $scope.ShowMessage('Details updated successfully!');
             });
+        }
 
+        $scope.updateUserAddtionalInfo = function (columnName, value) {
+
+            var baData = {};
+            BaAttributesService.GetIdByFbId($scope.candidate.facebookId).then(function(response){
+                    
+                baData.facebookId                      = $scope.candidate.facebookId;
+                baData.tshirtSize                      = $scope.candidate.tshirtSize;
+                baData.ownDigitalCamera                = $scope.candidate.ownDigitalCamera;
+                baData.preferredShippingAddress        = $scope.candidate.preferredShippingAddress;
+                baData.garageOrStorageSpaceForPackages = $scope.candidate.garageOrStorageSpaceForPackages;
+         
+                if(response.id){
+
+                    baData.id = response.id;
+                }
+                BaAttributesService.Update(baData).then(function(stat){
+
+                    if(angular.isObject(stat)){
+
+                        $scope.ShowMessage('Details updated successfully!');
+                    } else{
+                        
+                        $scope.ShowMessage('Something gone wrong, Please contact admin!!');
+                    }
+                });
+            });
         }
 
         /** 
