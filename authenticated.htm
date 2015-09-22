@@ -121,11 +121,18 @@
         <section class="container-fluid top-header">
             <div class="container">
                 <nav class="navbar  row" role="navigation">
-                    <div class="navbar-header brand-logo">
+                    <div class="navbar-header brand-logo" ng-hide="hidenav==true">
                         <a class="navbar-brand" href="#/company-profile"> 
                             <p>
                                 <img src="img/logo.png" alt="Smiley face" align="middle"> esPronto
                             </p>
+                        </a>
+                    </div>
+                    <div class="navbar-header brand-logo" ng-hide="hidenav!=true">
+                        <a class="navbar-brand" href="javascript:void(0);"> 
+                        <p>
+                            <img src="img/logo.png" alt="Smiley face" align="middle"> esPronto
+                        </p>
                         </a>
                     </div>
                     <ul class="nav navbar-nav right-buttons hidden-xs">
