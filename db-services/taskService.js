@@ -25,10 +25,13 @@ angular.module("db_TaskService", ['parse']).factory("dbTaskService", function ($
             if (angular.isObject(response)) {
 
                 var expiryTime = response.get("expiryTime");
+                var endTime    = response.get("endTime");
                 model = {
                     id: response.id,
                     name: response.get("name"),
                     price: response.get("price"),
+                    start_time: new Date(expiryTime), 
+                    end_time: new Date(endTime), 
                     day: new Date(expiryTime).getDate(),
                     month: new Date(expiryTime).getMonth(),
                     year: new Date(expiryTime).getFullYear(),

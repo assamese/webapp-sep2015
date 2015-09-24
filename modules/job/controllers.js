@@ -12,20 +12,16 @@ $(document).ready(function () {
 
             /*time picker options*/
             $scope.job = {};
-            $scope.job.start_time = new Date();
-            $scope.job.start_time.setHours(12,0,0,0);
-            $scope.job.end_time = new Date();
-            $scope.job.end_time.setHours(14,0,0,0);
             $scope.hstep = 1;
             $scope.mstep = 5;
             $scope.ismeridian = true;
-            /*time picker options ends*/
-            $scope.header = "Edit Job";
-            $scope.button_text = "Submit";
 
             if (angular.isDefined($routeParams.id)) {
+                $scope.header = "Edit Job";
+                $scope.button_text = "Submit";
                 JobService.GetJobFromTask($routeParams.id).then(function (response) {
                     if (angular.isObject(response)) {
+                       
                         $scope.job = response;
                     }
                     else {
@@ -36,6 +32,11 @@ $(document).ready(function () {
             else {
                 $scope.header = "Post a Job";
                 $scope.button_text = "Post a Job";
+                $scope.job.start_time = new Date();
+                $scope.job.start_time.setHours(12,0,0,0);
+                $scope.job.end_time = new Date();
+                $scope.job.end_time.setHours(14,0,0,0);
+                /*time picker options ends*/
             }
 
             $scope.SetBreadCrumb($scope.header);
