@@ -106,6 +106,7 @@ angular.module("um_JobService", ['parse', 'db_TaskService', 'db_TaskNewService',
             if (angular.isObject(model)) {
                             
                 GoogleMapService.GetZipCode(model.geoCode).then(function (response) {
+
                     if (angular.isObject(response)) {
                         model.zipcode = response.zipCode;
                     }
